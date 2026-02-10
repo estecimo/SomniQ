@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Evaluación de Crédito</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>Evaluación de Crédito</h2>
+
+  <input id="edad" type="number" placeholder="Edad">
+  <input id="ingresos" type="number" placeholder="Ingresos mensuales">
+  <input id="antiguedad" type="number" placeholder="Antigüedad laboral">
+
+  <select id="deudas">
+    <option value="true">Tiene deudas</option>
+    <option value="false">No tiene deudas</option>
+  </select>
+  
+  <p> Historial crediticio </p>
+  <select id="historial">
+    <option value="malo">Malo</option>
+    <option value="regular">Regular</option>
+    <option value="bueno">Bueno</option>
+  </select>
+
+  <button onclick="enviar()">Evaluar</button>
+
+  <p id="resultado"></p>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
