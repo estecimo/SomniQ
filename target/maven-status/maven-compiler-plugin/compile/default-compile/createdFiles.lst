@@ -1,7 +1,0 @@
-com\example\credito\CreditoApplication.class
-com\example\credito\application\ClasificarCreditoUseCase.class
-com\example\credito\infrastructure\weka\WekaModeloCreditoService.class
-com\example\credito\interfaces\rest\CreditoRequestDTO.class
-com\example\credito\domain\CreditoCaso.class
-com\example\credito\interfaces\rest\CreditoResponseDTO.class
-com\example\credito\interfaces\rest\CreditoController.class
