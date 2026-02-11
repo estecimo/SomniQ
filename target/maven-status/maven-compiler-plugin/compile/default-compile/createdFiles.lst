@@ -1,7 +1,7 @@
-com\example\credito\CreditoApplication.class
-com\example\credito\application\ClasificarCreditoUseCase.class
-com\example\credito\infrastructure\weka\WekaModeloCreditoService.class
-com\example\credito\interfaces\rest\CreditoRequestDTO.class
-com\example\credito\domain\CreditoCaso.class
-com\example\credito\interfaces\rest\CreditoResponseDTO.class
-com\example\credito\interfaces\rest\CreditoController.class
+com\example\calidadsueno\application\ClasificarCalidadSuenoUseCase.class
+com\example\calidadsueno\domain\CasoCalidadSueno.class
+com\example\calidadsueno\CalidadSuenoApplication.class
+com\example\calidadsueno\interfaces\rest\CalidadSuenoRequestDTO.class
+com\example\calidadsueno\interfaces\rest\CalidadSuenoController.class
+com\example\calidadsueno\interfaces\rest\CalidadSuenoResponseDTO.class
+com\example\calidadsueno\infrastructure\ServicioEvaluacionJ48.class
