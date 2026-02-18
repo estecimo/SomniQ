@@ -1,7 +1,0 @@
-com\example\calidadsueno\application\ClasificarCalidadSuenoUseCase.class
-com\example\calidadsueno\domain\CasoCalidadSueno.class
-com\example\calidadsueno\CalidadSuenoApplication.class
-com\example\calidadsueno\interfaces\rest\CalidadSuenoRequestDTO.class
-com\example\calidadsueno\interfaces\rest\CalidadSuenoController.class
-com\example\calidadsueno\interfaces\rest\CalidadSuenoResponseDTO.class
-com\example\calidadsueno\infrastructure\ServicioEvaluacionJ48.class
