@@ -2,35 +2,89 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Evaluación de Crédito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación Calidad de Sueño</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="card">
-  <h2>Evaluación de Crédito</h2>
+  <div class="card">
+    <h2>Calidad de Sueño</h2>
 
-  <input id="edad" type="number" placeholder="Edad">
-  <input id="ingresos" type="number" placeholder="Ingresos mensuales">
-  <input id="antiguedad" type="number" placeholder="Antigüedad laboral">
+    <form id="formSueno">
+      <label>¿Cómo percibe su calidad de sueño?</label>
+      <select id="percepcion">
+        <option value="Buena">Buena</option>
+        <option value="Mala">Mala</option>
+      </select>
 
-  <select id="deudas">
-    <option value="true">Tiene deudas</option>
-    <option value="false">No tiene deudas</option>
-  </select>
-  
-  <p> Historial crediticio </p>
-  <select id="historial">
-    <option value="malo">Malo</option>
-    <option value="regular">Regular</option>
-    <option value="bueno">Bueno</option>
-  </select>
+      <label>Medicamentos para dormir</label>
+      <select id="frecuenciaMedicacion">
+        <option value="Ninguna vez en el último mes">Ninguna vez</option>
+        <option value="Menos de una vez a la semana">Menos de una vez/semana</option>
+        <option value="Una o dos veces a la semana">1 o 2 veces/semana</option>
+        <option value="Tres o más veces a la semana">3 o más veces/semana</option>
+      </select>
 
-  <button onclick="enviar()">Evaluar</button>
+      <label>Duración total de sueño</label>
+      <select id="duracionSueno">
+        <option value="Normal (6-9 horas)">Normal (6-9 horas)</option>
+        <option value="Corta (< 6 horas)">Corta (< 6 horas)</option>
+        <option value="Larga (> 9 horas)">Larga (> 9 horas)</option>
+      </select>
 
-  <p id="resultado"></p>
-</div>
+      <label>Somnolencia diurna</label>
+      <select id="somnolencia">
+        <option value="Normal">Normal</option>
+        <option value="Excesiva">Excesiva</option>
+        <option value="Marginal">Marginal</option>
+      </select>
 
-<script src="app.js"></script>
+      <label>¿Tiene adicción al Internet?</label>
+      <select id="adiccionInternet">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
+
+      <label>Nivel de adicción</label>
+      <select id="nivelAdiccion">
+        <option value="Sin adicción">Sin adicción</option>
+        <option value="Leve">Leve</option>
+        <option value="Moderada">Moderada</option>
+        <option value="Severa">Severa</option>
+      </select>
+
+      <label>Uso de Internet para ventas</label>
+      <select id="ventaOnline">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
+
+      <label>Uso de Internet para compras</label>
+      <select id="comprasOnline">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
+
+      <label>Sexo</label>
+      <select id="sexo">
+        <option value="Hombre">Hombre</option>
+        <option value="Mujer">Mujer</option>
+      </select>
+
+      <label>Latencia de sueño</label>
+      <select id="latencia">
+        <option value="Normal (5-15 minutos)">Normal (5-15 min)</option>
+        <option value="Prolongada (> 15 minutos)">Prolongada (> 15 min)</option>
+        <option value="Patológica (< 5 minutos)">Patológica (< 5 min)</option>
+      </select>
+
+      <button type="button" onclick="enviar()">ANALIZAR SUEÑO</button>
+    </form>
+
+    <div id="resultado"></div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,19 +1,20 @@
-# API de Clasificación de Créditos con WEKA
+# API de Clasificación de Calidad de Sueño con WEKA
 
-Una aplicación **Spring Boot** que utiliza **WEKA (Waikato Environment for Knowledge Analysis)** para clasificar solicitudes de crédito mediante un modelo de aprendizaje automático. La aplicación implementa los principios de **Clean Architecture**.
+Una aplicación **Spring Boot** que utiliza **WEKA (Waikato Environment for Knowledge Analysis)** para clasificar la calidad del sueño mediante un modelo de aprendizaje automático. La aplicación implementa los principios de **Clean Architecture**.
 
 ---
 
 ## 🎯 Descripción del Proyecto
 
-Este proyecto es una API REST que permite clasificar solicitudes de crédito como **Aprobado** o **Rechazado** basándose en características del solicitante como:
-- Edad
-- Ingresos
-- Antigüedad laboral
-- Deudas existentes
-- Historial crediticio
+Este proyecto es una API REST que permite clasificar la calidad del sueño como **Buena** o **Mala** basándose en características y hábitos del usuario como:
+- Percepción subjetiva del sueño
+- Duración y latencia del sueño
+- Somnolencia diurna
+- Frecuencia de uso de medicamentos
+- Adicción a internet y hábitos de compra online
+- Datos demográficos (sexo)
 
-La clasificación se realiza utilizando un modelo entrenado con WEKA, que está almacenado en `modelo_credito.model`.
+La clasificación se realiza utilizando un modelo entrenado con WEKA, que está almacenado en `Ciencias exactas_Unpruned model.model`.
 
 ---
 
@@ -23,23 +24,23 @@ La clasificación se realiza utilizando un modelo entrenado con WEKA, que está 
 WekaNode48/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/example/credito/
-│   │   │   ├── CreditoApplication.java          # Punto de entrada de la aplicación
+│   │   ├── java/com/example/calidadsueno/
+│   │   │   ├── CalidadSuenoApplication.java          # Punto de entrada de la aplicación
 │   │   │   ├── application/
-│   │   │   │   └── ClasificarCreditoUseCase.java   # Lógica de negocio
+│   │   │   │   └── ClasificarCalidadSuenoUseCase.java   # Lógica de negocio
 │   │   │   ├── domain/
-│   │   │   │   └── CreditoCaso.java               # Entidad de dominio
+│   │   │   │   └── CasoCalidadSueno.java               # Entidad de dominio
 │   │   │   ├── infrastructure/
 │   │   │   │   └── weka/
-│   │   │   │       └── WekaModeloCreditoService.java # Integración con WEKA
+│   │   │   │       └── WekaModeloCalidadSueno.java # Integración con WEKA
 │   │   │   └── interfaces/
 │   │   │       └── rest/
-│   │   │           ├── CreditoController.java     # Endpoints REST
-│   │   │           ├── CreditoRequestDTO.java     # DTO de entrada
-│   │   │           └── CreditoResponseDTO.java    # DTO de salida
+│   │   │           ├── CalidadSuenoController.java     # Endpoints REST
+│   │   │           ├── CalidadSuenoRequestDTO.java     # DTO de entrada
+│   │   │           └── CalidadSuenoResponseDTO.java    # DTO de salida
 │   │   └── resources/
 │   │       ├── application.properties          # Configuración de la app
-│   │       ├── modelo_credito.model           # Modelo WEKA entrenado
+│   │       ├── Ciencias exactas_Unpruned model.model  # Modelo WEKA entrenado
 │   │       └── static/
 │   │           ├── index.html                 # Frontend
 │   │           ├── styles.css                 # Estilos
@@ -109,29 +110,22 @@ Este comando:
 
 ### 3️⃣ Ejecutar la Aplicación
 
-#### Opción A: Usando Maven
+#### Usando Maven
 ```bash
 mvn spring-boot:run
-```
-
-#### Opción B: Crear JAR y ejecutar
-```bash
-mvn clean package
-java -jar target/credito-0.0.1-SNAPSHOT.jar
 ```
 
 ### 4️⃣ Acceder a la Aplicación
 Una vez que veas el mensaje `Application started`, accede a:
 - **Frontend**: http://localhost:8080
-- **API REST**: http://localhost:8080/api/credito/clasificar
 
 ---
 
 ##  Uso de la API
 
-### Endpoint Principal: Clasificar Crédito
+### Endpoint Principal: Clasificar Calidad de Sueño
 
-**URL**: `POST /api/credito/clasificar`
+**URL**: `POST /api/calidad-sueno/clasificar`
 
 **Headers**:
 ```
@@ -141,30 +135,39 @@ Content-Type: application/json
 **Request Body**:
 ```json
 {
-  "edad": 35,
-  "ingresos": 50000,
-  "antiguedadLaboral": 5,
-  "tieneDeudas": false,
-  "historial": "bueno"
+  "percepcion": "Buena",
+  "frecuenciaMedicacion": "Una o dos veces en el último mes",
+  "duracionSueno": "Normal (6-9 horas)",
+  "somnolenciaDiurna": "Normal",
+  "adiccionInternet": "No",
+  "ventaOnline": "No",
+  "comprasOnline": "Sí",
+  "sexo": "Hombre",
+  "nivelAdiccion": "Sin adicción",
+  "latencia": "Normal (5-15 minutos)"
 }
 ```
 
 **Response (Éxito - 200)**:
 ```json
 {
-  "clasificacion": "Aprobado",
-  "probabilidad": 0.85
+  "clasificacion": "Buena"
 }
 ```
 
 ### Parámetros de Entrada
 | Parámetro | Tipo | Descripción | Ejemplo |
 |-----------|------|-------------|---------|
-| `edad` | Integer | Edad del solicitante | 35 |
-| `ingresos` | Double | Ingresos mensuales/anuales | 50000 |
-| `antiguedadLaboral` | Integer | Años en el trabajo actual | 5 |
-| `tieneDeudas` | Boolean | ¿Tiene deudas activas? | false |
-| `historial` | String | Historial crediticio (bueno/malo/regular) | "bueno" |
+| `percepcion` | String | Percepción subjetiva del sueño | "Buena" o "Mala" |
+| `frecuenciaMedicacion` | String | Frecuencia de medicamentos para dormir | "Ninguna vez en el último mes" |
+| `duracionSueno` | String | Duración del sueño | "Corta (< 6h)", "Normal (6-9h)", "Larga (> 9h)" |
+| `somnolenciaDiurna` | String | Nivel de somnolencia diurna | "Normal", "Excesiva", "Marginal" |
+| `adiccionInternet` | String | ¿Es adicto a internet? | "Sí" o "No" |
+| `ventaOnline` | String | ¿Realiza ventas online? | "Sí" o "No" |
+| `comprasOnline` | String | ¿Realiza compras online? | "Sí" o "No" |
+| `sexo` | String | Género del usuario | "Hombre" o "Mujer" |
+| `nivelAdiccion` | String | Nivel de adicción a internet | "Sin adicción", "Leve", "Moderada", "Severa" |
+| `latencia` | String | Latencia del sueño (tiempo para dormir) | "Patológica (< 5m)", "Normal (5-15m)", "Prolongada (> 15m)" |
 
 ---
 
@@ -172,7 +175,7 @@ Content-Type: application/json
 
 El proyecto incluye un frontend HTML/CSS/JavaScript ubicado en `src/main/resources/static/`:
 
-- **index.html**: Formulario interactivo para clasificar créditos
+- **index.html**: Formulario interactivo para clasificar calidad de sueño
 - **styles.css**: Estilos visuales
 - **app.js**: Lógica de comunicación con la API REST
 
@@ -185,17 +188,17 @@ Accede al frontend en: **http://localhost:8080**
 ```
 1. Usuario ingresa datos en el formulario (Frontend)
    ↓
-2. Frontend envía POST a /api/credito/clasificar (API REST)
+2. Frontend envía POST a /api/calidadsueno/clasificar (API REST)
    ↓
-3. CreditoController recibe la solicitud
+3. CalidadSuenoController recibe la solicitud
    ↓
-4. ClasificarCreditoUseCase procesa la lógica de negocio
+4. ClasificarCalidadSuenoUseCase procesa la lógica de negocio
    ↓
-5. WekaModeloCreditoService carga el modelo y predice
+5. WekaModeloCalidadSueno carga el modelo y predice
    ↓
 6. Respuesta se envía al Frontend
    ↓
-7. Usuario ve el resultado (Aprobado/Rechazado)
+7. Usuario ve el resultado (Buena/Mala)
 ```
 
 ---
@@ -234,17 +237,18 @@ server.port=8081
 ```
 
 ### El modelo WEKA no se carga
-**Solución**: Verifica que `modelo_credito.model` esté en `src/main/resources/`.
-
+**Solución**: Verifica que `Ciencias exactas_Unpruned model.model` esté en `src/main/resources/`.
+ 
 ---
 
 ## 📝 Notas Importantes
 
-- El modelo WEKA (`modelo_credito.model`) debe estar en el classpath
+- El modelo WEKA (`Ciencias exactas_Unpruned model.model`) debe estar en el classpath
 - La aplicación requiere Java 17+
 - CORS está habilitado para permitir requests desde diferentes orígenes
-- La respuesta incluye tanto la clasificación como la probabilidad de predicción
+- La respuesta incluye tanto la clasificación de calidad del sueño como la probabilidad de predicción
+- El modelo utiliza características relacionadas con hábitos de sueño, salud mental e internet para realizar la clasificación
 
 ---
 
-**Última actualización**: Febrero 10, 2026
+**Última actualización**: Febrero 17, 2026

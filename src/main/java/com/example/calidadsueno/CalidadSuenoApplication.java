@@ -1,12 +1,12 @@
-package com.example.credito;
+package com.example.calidadsueno;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CreditoApplication {
+public class CalidadSuenoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CreditoApplication.class, args);
+        SpringApplication.run(CalidadSuenoApplication.class, args);
     }
 }
