@@ -1,67 +1,174 @@
+/* Estilos Globales */
 body {
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
 }
 
 .card {
-  background: white;
-  width: 40%;
-  margin: 50px auto; /* Reducido de 100px para que no se pierda el final en pantallas pequeñas */
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+    font-size: 1.4rem;
+    color: #1e3c72;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 h2 {
-  text-align: center;
-  color: #1e3c72;
-  margin-top: 0;
+    text-align: center;
+    color: #555;
+    margin-top: 0;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* Etiquetas y Tooltips */
+.label-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
 }
 
 label {
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  color: #555;
-  margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
 }
 
-input, select, button {
-  width: 100%;
-  margin: 8px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* Asegura que el padding no desborde el ancho */
+.tooltip {
+    position: relative;
+    display: inline-block;
 }
 
-input {
-  width: 100%; /* Ajustado al 100% con border-box para evitar descuadres */
+.info-icon {
+    font-size: 11px;
+    background: #1e88e5;
+    color: white;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: help;
+    font-weight: bold;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 10;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    line-height: 1.3;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Formularios */
+select, button {
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+select {
+    background-color: #fdfdfd;
+    cursor: pointer;
 }
 
 button {
-  background: #1e88e5;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-  margin-top: 20px;
-  transition: background 0.3s;
+    background: #1e88e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background 0.3s;
 }
 
 button:hover {
-  background: #1565c0;
+    background: #1565c0;
 }
 
+.btn-secundario {
+    background-color: #28a745;
+}
+
+.btn-secundario:hover {
+    background-color: #218838;
+}
+
+/* Resultados y Otros */
 #resultado {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #1e3c72; /* Azul oscuro para que combine */
-  margin-top: 20px;
-  padding: 10px;
-  min-height: 24px; /* Evita que la tarjeta "salte" cuando aparece el texto */
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25em;
+    color: #1e3c72;
+    margin: 20px 0;
+    min-height: 30px;
+}
+
+#texto-explicacion {
+    margin-top: 1rem;
+    text-align: justify;
+    border-top: 1px dashed #ccc;
+    padding-top: 1rem;
+    display: none;
+    font-size: 14px;
+    color: #444;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-left-color: #28a745;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.disclaimer {
+    margin-top: 30px;
+    font-size: 11px;
+    color: #777;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    line-height: 1.5;
+    border: 1px solid #eee;
 }

@@ -1,20 +1,26 @@
 async function enviar() {
   try {
-    // Captura de datos sincronizada con los IDs del HTML
+    const selects = document.querySelectorAll('select');
+    for (let select of selects) {
+      if (select.value === "") {
+        alert("Por favor, completa todos los campos del formulario.");
+        select.focus();
+        return;
+      }
+    }
+
     const data = {
-      percepcionSubjetiva: document.getElementById("percepcion").value,
+      percepcion: document.getElementById("percepcion").value,
       frecuenciaMedicacion: document.getElementById("frecuenciaMedicacion").value,
       duracionSueno: document.getElementById("duracionSueno").value,
-      somnolenciaDiurna: document.getElementById("somnolencia").value,
+      somnolenciaDiurna: document.getElementById("somnolenciaDiurna").value,
       adiccionInternet: document.getElementById("adiccionInternet").value,
       ventaOnline: document.getElementById("ventaOnline").value,
       comprasOnline: document.getElementById("comprasOnline").value,
       sexo: document.getElementById("sexo").value,
-      nivelAdicInternet: document.getElementById("nivelAdiccion").value, 
-      latenciaSueno: document.getElementById("latencia").value           
+      nivelAdiccion: document.getElementById("nivelAdiccion").value, 
+      latencia: document.getElementById("latencia").value           
     };
-
-    console.log("Enviando datos:", data);
 
     const res = await fetch("http://localhost:8080/api/calidad-sueno/clasificar", {
       method: "POST",
@@ -22,15 +28,66 @@ async function enviar() {
       body: JSON.stringify(data)
     });
 
-    if (!res.ok) throw new Error("Error en la respuesta del servidor");
+    if (!res.ok) throw new Error("Error 500: El modelo no reconoció un valor.");
 
     const dto = await res.json();
-    
-    // resultado en el div correspondiente
-    document.getElementById("resultado").innerText = "La predicción es: " + dto.resultado;
+    const resultadoElement = document.getElementById("resultado");
+    resultadoElement.innerText = "La predicción es: " + dto.resultado;
+    resultadoElement.style.color = dto.resultado === "Buena" ? "#28a745" : "#d9534f";
+
+    document.getElementById("explicacion-container").style.display = "block";
 
   } catch (error) {
     console.error("Error:", error);
-    document.getElementById("resultado").innerText = "Error: Compruebe la conexión con el backend.";
+    document.getElementById("resultado").innerText = "Error: " + error.message;
   }
+}
+
+// ESTA ES LA FUNCIÓN QUE TE FALTA:
+async function pedirExplicacion() {
+    const btn = document.getElementById("btn-explicar");
+    const loading = document.getElementById("loading-explicacion");
+    const texto = document.getElementById("texto-explicacion");
+
+    btn.style.display = "none";
+    loading.style.display = "block";
+    texto.style.display = "none";
+
+    // Extraemos el resultado limpio (sin el texto "La predicción es: ")
+    const resultadoTexto = document.getElementById("resultado").innerText.replace("La predicción es: ", "");
+
+    const data = {
+        percepcion: document.getElementById("percepcion").value,
+        frecuenciaMedicacion: document.getElementById("frecuenciaMedicacion").value,
+        duracionSueno: document.getElementById("duracionSueno").value,
+        somnolenciaDiurna: document.getElementById("somnolenciaDiurna").value,
+        adiccionInternet: document.getElementById("adiccionInternet").value,
+        ventaOnline: document.getElementById("ventaOnline").value,
+        comprasOnline: document.getElementById("comprasOnline").value,
+        sexo: document.getElementById("sexo").value,
+        nivelAdiccion: document.getElementById("nivelAdiccion").value, 
+        latencia: document.getElementById("latencia").value,
+        resultado: resultadoTexto // Importante para Gemini
+    };
+
+    try {
+        const res = await fetch("http://localhost:8080/api/calidad-sueno/explicar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw new Error("No se pudo obtener la explicación.");
+
+        const result = await res.json();
+        texto.innerText = result.explicacion;
+        texto.style.display = "block";
+    } catch (error) {
+        console.error("Error en Gemini:", error);
+        texto.innerText = "Hubo un problema al generar la explicación. Intente de nuevo.";
+        texto.style.display = "block";
+        btn.style.display = "inline-block";
+    } finally {
+        loading.style.display = "none";
+    }
 }
