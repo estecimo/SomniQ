@@ -43,7 +43,6 @@ async function enviar() {
   }
 }
 
-// ESTA ES LA FUNCIÓN QUE TE FALTA:
 async function pedirExplicacion() {
     const btn = document.getElementById("btn-explicar");
     const loading = document.getElementById("loading-explicacion");
@@ -53,7 +52,6 @@ async function pedirExplicacion() {
     loading.style.display = "block";
     texto.style.display = "none";
 
-    // Extraemos el resultado limpio (sin el texto "La predicción es: ")
     const resultadoTexto = document.getElementById("resultado").innerText.replace("La predicción es: ", "");
 
     const data = {

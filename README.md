@@ -19,8 +19,8 @@ Este proyecto es una API REST que permite:
 - Adicción a internet y hábitos de compra/venta online
 - Datos demográficos (sexo)
 
-### Nuevas Funcionalidades (v1.1.0)
-✨ **Google Gemini API** - Las explicaciones ahora son generadas por un modelo IA especialista en Medicina del Sueño, proporcioando análisis personalizados basados en los datos específicos del usuario.
+### Nuevas Funcionalidades
+✨ **Google Gemini API Integration** - Las explicaciones son generadas por un modelo IA especialista en Medicina del Sueño, proporcionando análisis personalizados basados en los datos específicos del usuario.
 
 ---
 
@@ -72,11 +72,11 @@ WekaNode48/
 | Tecnología | Versión | Propósito |
 |-------------|---------|----------|
 | **Java** | 17 | Lenguaje de programación |
-| **Spring Boot** | 3.2.2 | Framework web |
-| **WEKA** | 3.8.6 | Machine Learning - Clasificación |
-| **Google Gemini** | 1.5 Flash | IA generativa para explicaciones ✨ |
-| **Maven** | Latest | Gestor de dependencias |
-| **HTML/CSS/JavaScript** | - | Frontend interactivo |
+| **Spring Boot** | 3.2.2 | Framework web y configuración |
+| **WEKA** | 3.8.6 | Machine Learning - Clasificación con J48 |
+| **Google Gemini** | 1.5 Flash | IA generativa para explicaciones inteligentes |
+| **Maven** | 3.6+ | Gestor de dependencias y build |
+| **HTML/CSS/JavaScript** | ES6 | Frontend interactivo |
 
 ---
 
@@ -95,10 +95,11 @@ mvn -version
 # Salida esperada: Apache Maven 3.6.0 (o superior)
 ```
 
-### Requerimientos Opcionales
-- **API Key de Google Gemini**: Necesaria para la funcionalidad de explicaciones
-  - Obtén tu clave en: [Google AI Studio](https://aistudio.google.com/app/apikey)
-  - La primera clave es gratis con cuota generosa
+### Requerimientos Necesarios para Funcionalidad Completa
+- **API Key de Google Gemini**: **OBLIGATORIA** para la funcionalidad de explicaciones
+  - Obtén tu clave gratis en: [Google AI Studio](https://aistudio.google.com/app/apikey)
+  - La cuota gratuita es generosa para uso moderado
+  - Sin esta clave, el endpoint `/explicar` no funcionará
 
 ---
 
@@ -117,21 +118,46 @@ Este comando:
 - Compila el código fuente
 - Descarga automáticamente las dependencias
 
-### 3️⃣ Configurar Google Gemini (Opcional pero Recomendado)
+### 3️⃣ Configurar Google Gemini (OBLIGATORIO)
 
-Edita `src/main/resources/application.properties`:
+Edita `src/main/resources/application.properties` y agrega tu API Key:
 
 ```properties
 server.port=8080
 gemini.api.key=tu_api_key_gemini_aqui
 ```
 
+Alternativamente, puedes pasar la clave como variable de entorno:
+```bash
+export GEMINI_API_KEY=tu_api_key_aqui
+# O en Windows:
+set GEMINI_API_KEY=tu_api_key_aqui
+```
+
 ### 4️⃣ Ejecutar la Aplicación
 
+**Opción A - Ejecución directa (Desarrollo)**:
 ```bash
 mvn spring-boot:run
 ```
-📡 API Endpoints
+
+**Opción B - Compilar JAR y ejecutar (Producción)**:
+```bash
+mvn clean package
+java -jar target/credito-*.jar
+```
+
+**Resultado**:
+```
+[INFO] Iniciando CalidadSuenoApplication
+[INFO] Servidor iniciado en http://localhost:8080
+```
+
+📡 **La aplicación estará disponible en**: http://localhost:8080
+
+---
+
+## 📡 API Endpoints
 
 ### 1️⃣ Clasificar Calidad de Sueño
 
@@ -167,9 +193,9 @@ Content-Type: application/json
 }
 ```
 
-### 2️⃣ Generar Explicación con Gemini AI ✨
+### 2️⃣ Generar Explicación con Gemini AI
 
-Genera una explicación personalizada del resultado usando Google Gemini.
+Genera una explicación personalizada del resultado usando Google Gemini AI (especialista en Medicina del Sueño).
 
 **URL**: `POST /api/calidad-sueno/explicar`
 
@@ -251,10 +277,10 @@ Content-Type: application/json
 │            (Retorna al Frontend)                               │
 └────────────────────────────┬────────────────────────────────────┘
                              │
-                             ▼ ✨ NUEVO
+                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│         6. POST /api/calidad-sueno/explicar                     │
-│          (El frontend envía automáticamente)                   │
+│         6. POST /api/calidad-sueno/explicar (Opcional)          │
+│          (Si usuario desea explicación detallada)              │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
@@ -395,76 +421,81 @@ server.port=8081
 ## 🎓 Información del Modelo WEKA
 
 ### Dataset
-- **Registros**: 92 estudiantes de Ciencias Exactas e Ingenierías
+- **Registros**: 92 estudiantes (Ciencias Exactas e Ingenierías)
 - **Fuente**: Encuesta estructurada sobre hábitos de sueño
 - **Modelo**: J48 (Árbol de decisión)
+- **Archivo**: `Ciencias exactas_Unpruned model.model`
+- **Ubicación en desarrollo**: `src/main/resources/`
+- **Ubicación en JAR compilado**: `classpath:Ciencias exactas_Unpruned model.model`
 
 ### Atributos de Entrada
-1. Percepción propia del sueño
-2. Medicamentos para dormir
-3. Duración del sueño
-4. Somnolencia durante el día
-5. Adicción al Internet (Sí/No)
-6. Nivel de adicción a internet
-7. Uso de internet para vender
-8. Uso de internet para comprar
-9. Sexo (Hombre/Mujer)
-10. Latencia del sueño (tiempo para dormir)
+
+El modelo espera exactamente estos 10 atributos de entrada:
+
+1. **Percepción propia del sueño** (String: "Buena", "Mala")
+2. **Frecuencia de medicamentos** (String: "Ninguna vez en el último mes", "Una o dos veces en el último mes", "Una o más veces a la semana", "Diariamente")
+3. **Duración del sueño** (String: "Corta (< 6h)", "Normal (6-9h)", "Larga (> 9h)")
+4. **Somnolencia durante el día** (String: "Normal", "Marginal", "Excesiva")
+5. **Adicción a la Internet** (String: "Sí", "No")
+6. **Nivel de adicción a internet** (String: "Sin adicción", "Leve", "Moderada", "Severa")
+7. **Uso de internet para vender** (String: "Sí", "No")
+8. **Uso de internet para comprar** (String: "Sí", "No")
+9. **Sexo** (String: "Hombre", "Mujer")
+10. **Latencia del sueño** (String: "Patológica (< 5m)", "Normal (5-15m)", "Prolongada (> 15m)")
 
 ### Variable de Salida
-- **Calidad de Sueño**: Buena / Mala (clasificación binaria)
+- **Calidad de Sueño**: "Buena" o "Mala" (clasificación binaria)
 
-### Rendimiento
-- El modelo fue evaluado con 92 registros
-- Utiliza algoritmo J48 (árbol de decisión)
-- Optimizado sin pruning para máxima precisión
+### Rendimiento del Modelo
+- **Conjuntos de Entrenamiento**: 92 registros de estudiantes
+- **Algoritmo**: J48 (Árbol de Decisión Pruned/No Pruned)
+- **Modo Actual**: Sin pruning para máxima precisión en el árbol de decisión
+- **Tipo de Predicción**: Determinística (el mismo input siempre da el mismo output)
+- **Velocidad**: Predicciones instantáneas (< 10ms por clasificación)
 
 ---
 
 ## 📝 Notas Importantes
 
-### Arquitectura y Diseño
-- ✅ Arquitectura limpia (Clean Architecture)
-- ✅ Separación de responsabilidades por capas
-- ✅ CORS habilitado para requests desde cualquier origen
-- ✅ Uso de DTOs para transferencia de datos
+### Arquitectura y Diseño Actual
+- ✅ **Arquitectura limpia** (Clean Architecture) - Capas separadas: Interfaces, Application, Domain, Infrastructure
+- ✅ **Separación de responsabilidades** - Cada clase tiene un propósito único bien definido
+- ✅ **CORS habilitado** - `@CrossOrigin(origins = "*")` permite requests desde cualquier origen
+- ✅ **DTOs implementados** - Transferencia de datos segura entre capas
+- ✅ **Spring Boot 3.2.2** - Framework moderno y optimizado
 
-### WEKA
-- El modelo debe estar en el classpath en tiempo de ejecución
-- Se carga una única vez al iniciar la aplicación
-- Las predicciones son rápidas y determinísticas
+### Carga del Modelo WEKA
+- ⚠️ **Importante**: El archivo `Ciencias exactas_Unpruned model.model` DEBE estar en el classpath
+- Se carga **una única vez** al inicializar la aplicación
+- El modelo se deserializa del archivo binario `.model`
+- Las predicciones son **rápidas y determinísticas** (siempre el mismo resultado para los mismos inputs)
 
-### Gemini AI ✨
-- Las explicaciones requieren conexión a internet
-- Requiere configuración de API Key
-- Primera clave gratuita con límites razonables
-- El modelo es especialista en Medicina del Sueño
-- No emite recomendaciones médicas, solo análisis
+### Integración con Google Gemini AI
+- ✅ **Altamente recomendado**: Configurar una API Key válida para explicaciones inteligentes
+- ℹ️ **Sin API Key**: El endpoint `/explicar` retornará error 500
+- 🔐 **Seguridad**: Nunca almacenes API Keys en repositorios públicos - usa variables de entorno
+- 💡 **Cuota gratuita**: La API gratuita de Gemini tiene límites mensuales suficientes para desarrollo
 
 ### Seguridad
-- **⚠️ IMPORTANTE**: Nunca expongas tu API Key de Gemini en repositorios públicos
-- Usa variables de entorno en producción
-- Considera usar HTTPS en producción
-- Valida todas las entradas en el servidor
+- **🔐 CRÍTICO**: Nunca expongas tu API Key de Gemini en repositorios públicos
+- **Producción**: Usa **variables de entorno** en lugar de `application.properties` hardcodeado
+  ```bash
+  export GEMINI_API_KEY=tu_api_key_aqui
+  ```
+- **HTTPS**: Considera HTTPS en producción (actualmente solo HTTP en desarrollo)
+- **Validación**: Todos los inputs se validan en el servidor antes de procesar
+- **CORS**: Actualmente habilitado para cualquier origen - **considera restricciones en producción**
 
 ### Requisitos de Servidor
-- Java 17+ instalado
-- 256 MB RAM disponible (mínimo)
-- Conexión a internet para la funcionalidad Gemini
+- **Java 17+** instalado y en el PATH del sistema
+- **512 MB RAM mínimo** disponible (256 MB es el mínimo teórico)
+- **50 MB espacio en disco** para el JAR compilado
+- **Conexión a Internet** para la funcionalidad Gemini AI (OBLIGATORIA para `/explicar`)
+- **Puertos accesibles**: 8080 por defecto (modificable en `application.properties`)
 
 ---
 
-## 📞 Soporte
+**Última actualización**: Marzo 8, 2026  
+**Versión**: 0.0.1 (En Desarrollo)  
+**Estado**: Funcional - Todos los endpoints disponibles  
 
-Si encuentras problemas:
-
-1. Verifica los requisitos previos
-2. Revisa los logs en la consola
-3. Consulta la sección "Solución de Problemas"
-4. Valida que la API Key de Gemini sea correcta
-
----
-
-**Última actualización**: Febrero 18, 2026  
-**Versión**: 1.1.0  
-**Estado**: En revisión

@@ -9,6 +9,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +33,7 @@ public class GeminiService {
     public String getExplanation(ExplicacionRequestDTO request, String resultadoWeka) {
         String url = String.format(API_URL_TEMPLATE, apiKey);
 
-        // Construcción del Prompt usando tus 10 atributos exactos
+        // Construcción del Prompt usando los 10 atributos exactos
         String promptText = String.format(
             "Eres un especialista en Medicina del Sueño, experto en la evaluación de la calidad de sueño en adultos jóvenes." +
             "Tras completar un formulario basado en un modelo de Inteligencia Artificial entrenado con 92 registros de estudiantes de Ciencias Exactas e Ingenierías," +
@@ -45,7 +49,8 @@ public class GeminiService {
             "9. Sexo: %s\n" +
             "10. Tiempo en quedarse dormido (latencia): %s\n\n" +
             "Instrucciones: Explícame de forma simple por qué obtuve ese resultado. Dame una respuesta no mayor a un párrafo, en prosa y sin imágenes. " +
-            "Utiliza términos comunes y fáciles de entender por cualquier persona. Si no sabes cómo responder, dímelo. No emitas recomendaciones de ningún tipo, solo analiza la relación de los factores con el resultado '%s'.",
+            "Utiliza términos comunes y fáciles de entender por cualquier persona. Si no sabes cómo responder, dímelo. " +
+            "No emitas recomendaciones de ningún tipo, solo analiza la relación de los factores con el resultado '%s'.",
             resultadoWeka,
             request.percepcion,
             request.frecuenciaMedicacion,
@@ -86,8 +91,17 @@ public class GeminiService {
 
             return (String) parts.get(0).get("text");
 
+        } catch (HttpClientErrorException e) {
+            return "Error de configuración en el servicio de IA.";
+
+        } catch (HttpServerErrorException e) {
+            return "El servicio de IA está experimentando alta demanda. Inténtalo de nuevo en unos minutos.";
+
+        } catch (ResourceAccessException e) {
+            return "No se pudo conectar al servicio de IA. Verifica tu conexión a Internet.";
+            
         } catch (Exception e) {
-            return "No se pudo generar la explicación técnica. Por favor, consulte con un profesional. (Error: " + e.getMessage() + ")";
+            return "Ocurrió un error inesperado al procesar la solicitud.";
         }
     }
 }
