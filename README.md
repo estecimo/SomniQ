@@ -144,7 +144,7 @@ mvn spring-boot:run
 **Opción B - Compilar JAR y ejecutar (Producción)**:
 ```bash
 mvn clean package
-java -jar target/credito-*.jar
+java -jar target/calidadsueno-*.jar
 ```
 
 **Resultado**:
