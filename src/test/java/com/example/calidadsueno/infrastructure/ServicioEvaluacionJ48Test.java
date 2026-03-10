@@ -1,12 +1,18 @@
 package com.example.calidadsueno.infrastructure;
 
 import com.example.calidadsueno.domain.CasoCalidadSueno;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServicioEvaluacionJ48Test {
 
     private final ServicioEvaluacionJ48 servicio = new ServicioEvaluacionJ48();
+
+    @BeforeEach
+    void setUp() throws Exception {
+        servicio.init();
+    }
 
     @Test
     void testArbolJ48() {
