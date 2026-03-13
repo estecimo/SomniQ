@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.calidadsueno.infrastructure.dto.GeminiResponseDTO;
+
 @Service
 public class GeminiService {
 
@@ -75,23 +77,18 @@ public class GeminiService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         try {
-            ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
+            ResponseEntity<GeminiResponseDTO> response = restTemplate.postForEntity(url, entity, GeminiResponseDTO.class);
 
-            if (response.getBody() == null)
+            if (response.getBody() == null || response.getBody().getCandidates() == null || response.getBody().getCandidates().isEmpty()) {
                 return "Error: Respuesta vacía de Gemini.";
-
-            // Parse response: candidates[0].content.parts[0].text
-            Map<String, Object> responseBody = response.getBody();
-            List<Map<String, Object>> candidates = (List<Map<String, Object>>) responseBody.get("candidates");
-
-            if (candidates != null && !candidates.isEmpty()) {
-                Map<String, Object> candidate = candidates.get(0);
-                Map<String, Object> contentObj = (Map<String, Object>) candidate.get("content");
-                List<Map<String, Object>> parts = (List<Map<String, Object>>) contentObj.get("parts");
-                if (parts != null && !parts.isEmpty()) {
-                    return (String) parts.get(0).get("text");
-                }
             }
+
+            GeminiResponseDTO.Candidate firstCandidate = response.getBody().getCandidates().get(0);
+
+            if (firstCandidate.getContent() != null && firstCandidate.getContent().getParts() != null && !firstCandidate.getContent().getParts().isEmpty()) {
+                return firstCandidate.getContent().getParts().get(0).getText();
+            }
+
             return "No se pudo generar una explicación (formato inesperado).";
 
         } catch (Exception e) {
