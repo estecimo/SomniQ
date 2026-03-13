@@ -8,6 +8,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,10 @@ public class GeminiService {
     private final RestTemplate restTemplate;
 
     public GeminiService() {
-        this.restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); // 5 segundos para conectar
+        factory.setReadTimeout(15000); // 15 segundos máximo esperando respuesta
+        this.restTemplate = new RestTemplate(factory);
     }
 
     public String getExplanation(ExplicacionRequestDTO request) {
@@ -91,9 +97,18 @@ public class GeminiService {
 
             return "No se pudo generar una explicación (formato inesperado).";
 
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+            if (e.getStatusCode().value() == 429) {
+                return "Lo sentimos, el servicio de análisis está muy concurrido en este momento. Por favor, intenta de nuevo más tarde.";
+            }
+            return "Lo sentimos, hubo un problema al consultar el servicio de análisis (Error de comunicación).";
+        } catch (ResourceAccessException e) {
+            e.printStackTrace();
+            return "El servicio de análisis tardó demasiado en responder o no hay conexión a internet. Por favor, intenta de nuevo más tarde.";
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error al comunicarse con Gemini: " + e.getMessage();
+            return "Ocurrió un error inesperado al generar la explicación. Por favor, inténtalo más tarde.";
         }
     }
 }
