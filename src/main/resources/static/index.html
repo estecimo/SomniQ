@@ -9,120 +9,20 @@
 <body>
 
     <div class="card">
+        <div style="text-align: center; margin-bottom: 1rem;">
+        <img src="images/uady.png" alt="Logo UADY" style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
+        </div>
+
         <h1>Campus de Ciencias Exactas e Ingenierías</h1>
         <h2>Calidad de Sueño</h2>
 
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+        <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
+          Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos y percepciones recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para brindarte un diagnóstico preliminar y una explicación personalizada.
+        </p>
+        </div>
+
         <form id="sleep-form">
-            <div class="label-container">
-                <label for="percepcion">¿Cómo percibe su calidad de sueño?</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Su valoración personal sobre qué tan bien siente que descansa.</span>
-                </div>
-            </div>
-            <select id="percepcion">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="Buena">Buena</option>
-                <option value="Mala">Mala</option>
-            </select>
-
-            <div class="label-container">
-                <label for="frecuenciaMedicacion">Medicamentos para dormir</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Consumo de fármacos para conciliar el sueño en el último mes.</span>
-                </div>
-            </div>
-            <select id="frecuenciaMedicacion">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="Ninguna vez en el último mes">Ninguna vez</option>
-                <option value="Menos de una vez a la semana">Menos de una vez/semana</option>
-                <option value="Una o dos veces a la semana">1 o 2 veces/semana</option>
-                <option value="Tres o más veces a la semana">3 o más veces/semana</option>
-            </select>
-
-            <div class="label-container">
-                <label for="duracionSueno">Duración total de sueño</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Total de horas que duerme habitualmente por noche.</span>
-                </div>
-            </div>
-            <select id="duracionSueno">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="Normal (6-9 horas)">Normal (6-9 horas)</option>
-                <option value="Corta (< 6 horas)">Corta (&lt; 6 horas)</option>
-                <option value="Larga (> 9 horas)">Larga (&gt; 9 horas)</option>
-            </select>
-
-            <div class="label-container">
-                <label for="somnolencia">Somnolencia diurna</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Sensación de sueño o cansancio extremo durante las actividades del día.</span>
-                </div>
-            </div>
-            <select id="somnolenciaDiurna">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="Normal">Normal</option>
-                <option value="Excesiva">Excesiva</option>
-                <option value="Marginal">Marginal</option>
-            </select>
-
-            <div class="label-container">
-                <label for="adiccionInternet">¿Tiene adicción al Internet?</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Uso compulsivo de la red que afecta su descanso.</span>
-                </div>
-            </div>
-            <select id="adiccionInternet">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="No">No</option>
-                <option value="Sí">Sí</option>
-            </select>
-
-            <div class="label-container">
-                <label for="nivelAdiccion">Nivel de adicción al Internet</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Grado de dependencia percibida del uso de Internet.</span>
-                </div>
-            </div>
-            <select id="nivelAdiccion">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="Sin adicción">Sin adicción</option>
-                <option value="Leve">Leve</option>
-                <option value="Moderada">Moderada</option>
-                <option value="Severa">Severa</option>
-            </select>
-
-            <div class="label-container">
-                <label for="ventaOnline">¿Usa Internet para realizar ventas?</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Uso de la red para vender productos o servicios.</span>
-                </div>
-            </div>
-            <select id="ventaOnline">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="No">No</option>
-                <option value="Sí">Sí</option>
-            </select>
-
-            <div class="label-container">
-                <label for="comprasOnline">¿Usa Internet para realizar compras?</label>
-                <div class="tooltip">
-                    <span class="info-icon">i</span>
-                    <span class="tooltiptext">Uso de la red para adquirir productos o servicios.</span>
-                </div>
-            </div>
-            <select id="comprasOnline">
-                <option value="" disabled selected>Seleccionar</option>
-                <option value="No">No</option>
-                <option value="Sí">Sí</option>
-            </select>
-
             <div class="label-container">
                 <label for="sexo">Sexo</label>
                 <div class="tooltip">
@@ -137,23 +37,136 @@
             </select>
 
             <div class="label-container">
-                <label for="latencia">Latencia de sueño</label>
+                <label for="percepcion">¿Cómo percibe su calidad de sueño?</label>
                 <div class="tooltip">
                     <span class="info-icon">i</span>
-                    <span class="tooltiptext">Tiempo que tarda en dormirte después de acostarte.</span>
+                    <span class="tooltiptext">Su valoración personal sobre qué tan bien siente que descansa.</span>
+                </div>
+            </div>
+            <select id="percepcion">    
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Buena">Buena</option>
+                <option value="Mala">Mala</option>
+            </select>
+
+            <div class="label-container">
+                <label for="frecuenciaMedicacion">¿Con qué frecuencia ha tomado medicamentos para dormir?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Fármacos usados específicamente para ayudar a conciliar el sueño.</span>
+                </div>
+            </div>
+            <select id="frecuenciaMedicacion">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Ninguna vez en el último mes">Ninguna vez en el último mes</option>
+                <option value="Menos de una vez a la semana">Menos de una vez a la semana</option>
+                <option value="Una o dos veces a la semana">1 o 2 veces a la semana</option>
+                <option value="Tres o más veces a la semana">3 o más veces a la semana</option>
+            </select>
+
+            <div class="label-container">
+                <label for="duracionSueno">¿En qué rango se encuentra su promedio de horas de sueño por noche?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Considere el tiempo real que pasa durmiendo, no solo el tiempo que permanece en la cama.</span>
+                </div>
+            </div>
+            <select id="duracionSueno">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Normal (6-9 horas)">Normal (Entre 6 y 9 horas)</option>
+                <option value="Corta (< 6 horas)">Corta (Menos de 6 horas)</option>
+                <option value="Larga (> 9 horas)">Larga (Más de 9 horas)</option>
+            </select>
+
+            <div class="label-container">
+                <label for="somnolenciaDiurna">¿Cuál es su nivel de somnolencia durante el día?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Tendencia excesiva a dormirse o dificultad para mantenerse despierto durante el día.</span>
+                </div>
+            </div>
+            <select id="somnolenciaDiurna">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Normal">Normal</option>
+                <option value="Excesiva">Excesiva</option>
+                <option value="Marginal">Marginal</option>
+            </select>
+
+            <div class="label-container">
+                <label for="latencia">¿Cuánto tiempo tarda habitualmente en quedarse dormido?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Minutos aproximados que transcurren desde que apaga la luz con la intención de dormir hasta que lo logra.</span>
                 </div>
             </div>
             <select id="latencia">
                 <option value="" disabled selected>Seleccionar</option>
-                <option value="Normal (5-15 minutos)">Normal (5-15 min)</option>
-                <option value="Prolongada (> 15 minutos)">Prolongada (> 15 min)</option>
-                <option value="Patológica (< 5 minutos)">Patológica (< 5 min)</option>
+                <option value="Normal (5-15 minutos)">Normal (Entre 5 y 15 min)</option>
+                <option value="Prolongada (> 15 minutos)">Prolongada (Más de 15 min)</option>
+                <option value="Patológica (< 5 minutos)">Patológica (Menos de 5 min)</option>
+            </select>
+
+            <div class="label-container">
+                <label for="adiccionInternet">¿Siente que hace un uso compulsivo o excesivo de Internet?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Se refiere a la dificultad para desconectarse, especialmente cuando interfiere con su descanso, rutinas o responsabilidades.</span>
+                </div>
+            </div>
+            <select id="adiccionInternet">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="No">No</option>
+                <option value="Sí">Sí</option>
+            </select>
+
+            <div class="label-container">
+                <label for="nivelAdiccion">¿Cómo calificaría su nivel de adicción hacia el uso de Internet?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Dificultad de mantenerse alejado de sus dispositivos conectados a la red en su día a día.</span>
+                </div>
+            </div>
+            <select id="nivelAdiccion">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Sin adicción">Sin adicción</option>
+                <option value="Leve">Leve</option>
+                <option value="Moderada">Moderada</option>
+                <option value="Severa">Severa</option>
+            </select>
+
+            <div class="label-container">
+                <label for="ventaOnline">¿Suele utilizar plataformas en línea para realizar ventas?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Por ejemplo: ventas a través de Facebook Marketplace, MercadoLibre, o tiendas virtuales propias.</span>
+                </div>
+            </div>
+            <select id="ventaOnline">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="No">No</option>
+                <option value="Sí">Sí</option>
+            </select>
+
+            <div class="label-container">
+                <label for="comprasOnline">¿Suele realizar compras a través de plataformas en línea?</label>
+                <div class="tooltip">
+                    <span class="info-icon">i</span>
+                    <span class="tooltiptext">Incluye pedir comida por aplicaciones, pagar suscripciones de streaming, comprar productos en tiendas digitales, entre otros.</span>
+                </div>
+            </div>
+            <select id="comprasOnline">
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="No">No</option>
+                <option value="Sí">Sí</option>
             </select>
 
             <button type="button" onclick="enviar()">ANALIZAR SUEÑO</button>
         </form>
 
         <p id="resultado"></p>
+        <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
+        <img id="resultado-imagen" src="" alt="Resultado" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
+        </div>
 
         <div id="explicacion-container" style="display: none; text-align: center">
             <button id="btn-explicar" onclick="pedirExplicacion()" class="btn-secundario">

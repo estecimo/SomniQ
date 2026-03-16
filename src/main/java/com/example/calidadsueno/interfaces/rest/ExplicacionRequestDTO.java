@@ -1,7 +1,6 @@
 package com.example.calidadsueno.interfaces.rest;
 
 public class ExplicacionRequestDTO {
-    // Atributos del formulario (10 campos)
     public String percepcion;
     public String frecuenciaMedicacion;
     public String duracionSueno;

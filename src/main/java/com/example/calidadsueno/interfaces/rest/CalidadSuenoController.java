@@ -20,11 +20,8 @@ public class CalidadSuenoController {
         this.geminiService = geminiService;
     }
 
-    // 1. Endpoint para Clasificar con Weka
     @PostMapping("/clasificar")
     public CalidadSuenoResponseDTO clasificar(@RequestBody CalidadSuenoRequestDTO req) throws Exception {
-        // Asegúrate de que el orden de los parámetros en el constructor de CasoCalidadSueno 
-        // coincida con el orden en tu clase Domain
         CasoCalidadSueno caso = new CasoCalidadSueno(
                 req.percepcion,
                 req.frecuenciaMedicacion,
@@ -42,8 +39,7 @@ public class CalidadSuenoController {
         return new CalidadSuenoResponseDTO(resultado);
     }
 
-    // 2. Endpoint para Explicación con Gemini
-    @PostMapping("/explicar") // Cambiado a /explicar para coincidir con el app.js
+    @PostMapping("/explicar") 
     public Map<String, String> explicar(@RequestBody ExplicacionRequestDTO req) {
         // Le pasamos el objeto DTO completo (que contiene los 10 campos + el resultado)
         // al servicio de Gemini

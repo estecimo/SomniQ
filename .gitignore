@@ -37,7 +37,7 @@ Thumbs.db
 *.tar.gz
 *.rar
 
-# Node (since package-lock.json is present)
+# Node
 node_modules/
 npm-debug.log*
 yarn-debug.log*

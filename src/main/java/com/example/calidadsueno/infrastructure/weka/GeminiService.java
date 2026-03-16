@@ -1,19 +1,15 @@
 package com.example.calidadsueno.infrastructure.weka;
 
 import com.example.calidadsueno.interfaces.rest.ExplicacionRequestDTO;
+import com.example.calidadsueno.infrastructure.weka.dto.GeminiResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResourceAccessException;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,14 +22,13 @@ public class GeminiService {
     private final String API_URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=%s";
     private final RestTemplate restTemplate;
 
-    public GeminiService() {
-        this.restTemplate = new RestTemplate();
+    public GeminiService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public String getExplanation(ExplicacionRequestDTO request, String resultadoWeka) {
         String url = String.format(API_URL_TEMPLATE, apiKey);
 
-        // Construcción del Prompt usando los 10 atributos exactos
         String promptText = String.format(
             "Eres un especialista en Medicina del Sueño, experto en la evaluación de la calidad de sueño en adultos jóvenes." +
             "Tras completar un formulario basado en un modelo de Inteligencia Artificial entrenado con 92 registros de estudiantes de Ciencias Exactas e Ingenierías," +
@@ -65,43 +60,37 @@ public class GeminiService {
             resultadoWeka
         );
 
-        // Estructura del Body para la API de Gemini
-        Map<String, Object> part = new HashMap<>();
-        part.put("text", promptText);
-
-        Map<String, Object> content = new HashMap<>();
-        content.put("parts", List.of(part));
-
-        Map<String, Object> body = new HashMap<>();
-        body.put("contents", List.of(content));
+        Map<String, Object> body = Map.of(
+            "contents", List.of(
+                Map.of("parts", List.of(
+                    Map.of("text", promptText)
+                ))
+            )
+        );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
+        // Parametrizamos el HttpEntity
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         try {
-            ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
-            Map<String, Object> responseBody = response.getBody();
+            // postForObject mapea el JSON directamente a tu GeminiResponseDTO
+            GeminiResponseDTO response = restTemplate.postForObject(url, entity, GeminiResponseDTO.class);
 
-            // Navegar en la respuesta JSON de Gemini
-            List<Map<String, Object>> candidates = (List<Map<String, Object>>) responseBody.get("candidates");
-            Map<String, Object> contentObj = (Map<String, Object>) candidates.get(0).get("content");
-            List<Map<String, Object>> parts = (List<Map<String, Object>>) contentObj.get("parts");
-
-            return (String) parts.get(0).get("text");
-
-        } catch (HttpClientErrorException e) {
-            return "Error de configuración en el servicio de IA.";
-
-        } catch (HttpServerErrorException e) {
-            return "El servicio de IA está experimentando alta demanda. Inténtalo de nuevo en unos minutos.";
-
-        } catch (ResourceAccessException e) {
-            return "No se pudo conectar al servicio de IA. Verifica tu conexión a Internet.";
+            if (response != null && response.getCandidates() != null && !response.getCandidates().isEmpty()) {
+                return response.getCandidates().get(0)
+                               .getContent()
+                               .getParts().get(0)
+                               .getText();
+            }
             
+            return "No se pudo obtener la explicación de la IA.";
+
+        } catch (RestClientException e) {
+            return "Error de comunicación con el servicio de IA.";
         } catch (Exception e) {
-            return "Ocurrió un error inesperado al procesar la solicitud.";
+            return "Ocurrió un error inesperado al procesar la respuesta.";
         }
     }
 }

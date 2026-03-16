@@ -15,9 +15,9 @@
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>credito</artifactId>
+    <artifactId>calidadsueno</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>credito</name>
+    <name>calidadsueno</name>
     <description>API REST con WEKA y Clean Architecture</description>
 
     <properties>

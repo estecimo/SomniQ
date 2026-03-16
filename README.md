@@ -1,26 +1,24 @@
 # API de Clasificación de Calidad de Sueño con WEKA + Gemini AI
 
-Una aplicación **Spring Boot** que utiliza **WEKA (Waikato Environment for Knowledge Analysis)** para clasificar la calidad del sueño y **Google Gemini AI** para generar explicaciones inteligentes. La aplicación implementa los principios de **Clean Architecture**.
+Aplicación **Spring Boot** que utiliza **WEKA** para clasificar la calidad del sueño y **Google Gemini AI** para generar explicaciones inteligentes.
 
 ---
 
 ## 🎯 Descripción del Proyecto
 
-Este proyecto es una API REST que permite:
+API REST que permite:
 
-1. **Clasificar la calidad del sueño** como **Buena** o **Mala** basándose en características y hábitos del usuario
-2. **Generar explicaciones personalizadas** usando Google Gemini AI especializado en Medicina del Sueño
+1. **Clasificar la calidad del sueño** como **Buena** o **Mala** según hábitos y características del usuario.
+2. **Generar explicaciones personalizadas** usando Google Gemini AI (especialista en Medicina del Sueño).
 
-### Características del Usuario
+### Características Analizadas
+
 - Percepción subjetiva del sueño
 - Duración y latencia del sueño
 - Somnolencia diurna
 - Frecuencia de uso de medicamentos
-- Adicción a internet y hábitos de compra/venta online
+- Adicción a internet y hábitos online
 - Datos demográficos (sexo)
-
-### Nuevas Funcionalidades
-✨ **Google Gemini API Integration** - Las explicaciones son generadas por un modelo IA especialista en Medicina del Sueño, proporcionando análisis personalizados basados en los datos específicos del usuario.
 
 ---
 
@@ -31,471 +29,291 @@ WekaNode48/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/example/calidadsueno/
-│   │   │   ├── CalidadSuenoApplication.java                 # Punto de entrada
+│   │   │   ├── CalidadSuenoApplication.java
 │   │   │   ├── application/
-│   │   │   │   └── ClasificarCalidadSuenoUseCase.java       # Lógica de negocio
+│   │   │   │   └── ClasificarCalidadSuenoUseCase.java
+│   │   │   ├── config/
+│   │   │   │   └── RestConfig.java
 │   │   │   ├── domain/
-│   │   │   │   └── CasoCalidadSueno.java                   # Entidad de dominio
+│   │   │   │   └── CasoCalidadSueno.java
 │   │   │   ├── infrastructure/
 │   │   │   │   └── weka/
-│   │   │   │       ├── WekaModeloCalidadSueno.java         # Integración WEKA
-│   │   │   │       └── GeminiService.java                  # Integración Gemini AI ✨
+│   │   │   │       ├── WekaModeloCalidadSueno.java
+│   │   │   │       ├── GeminiService.java
+│   │   │   │       └── dto/
+│   │   │   │           └── GeminiResponseDTO.java
 │   │   │   └── interfaces/
 │   │   │       └── rest/
-│   │   │           ├── CalidadSuenoController.java         # Endpoints REST
-│   │   │           ├── CalidadSuenoRequestDTO.java         # DTO clasificación
-│   │   │           ├── CalidadSuenoResponseDTO.java        # DTO respuesta
-│   │   │           └── ExplicacionRequestDTO.java          # DTO explicación ✨
+│   │   │           ├── CalidadSuenoController.java
+│   │   │           ├── CalidadSuenoRequestDTO.java
+│   │   │           ├── CalidadSuenoResponseDTO.java
+│   │   │           └── ExplicacionRequestDTO.java
 │   │   └── resources/
-│   │       ├── application.properties                       # Configuración
-│   │       ├── Ciencias exactas_Unpruned model.model        # Modelo WEKA
+│   │       ├── application.properties
+│   │       ├── Ciencias exactas_Unpruned model.model
 │   │       └── static/
-│   │           ├── index.html                              # Frontend
-│   │           ├── styles.css                              # Estilos
-│   │           └── app.js                                  # Lógica frontend
-│   └── test/                                                # Tests unitarios
-├── pom.xml                                                  # Configuración Maven
-└── README.md                                                # Este archivo
+│   │           ├── index.html
+│   │           ├── styles.css
+│   │           ├── app.js
+│   │           └── images/
+│   │               ├── geminigoodspleep.webp
+│   │               ├── geminibadsleep.webp
+|   |               └── uady.png
+│   └── test/
+├── pom.xml
+└── README.md
 ```
-
-### Arquitectura por Capas
-
-- **Interfaces (REST)**: Controladores y DTOs para la comunicación HTTP
-- **Application**: Casos de uso (lógica de aplicación)
-- **Domain**: Entidades y lógica de negocio central
-- **Infrastructure**: Implementación de servicios externos (WEKA)
 
 ---
 
 ## Tecnologías Utilizadas
 
-| Tecnología | Versión | Propósito |
-|-------------|---------|----------|
-| **Java** | 17 | Lenguaje de programación |
-| **Spring Boot** | 3.2.2 | Framework web y configuración |
-| **WEKA** | 3.8.6 | Machine Learning - Clasificación con J48 |
-| **Google Gemini** | 1.5 Flash | IA generativa para explicaciones inteligentes |
-| **Maven** | 3.6+ | Gestor de dependencias y build |
-| **HTML/CSS/JavaScript** | ES6 | Frontend interactivo |
+| Tecnología      | Versión       | Propósito                                  |
+|-----------------|---------------|--------------------------------------------|
+| Java            | 17            | Lenguaje de programación                   |
+| Spring Boot     | 3.2.2         | Framework web y REST API                   |
+| WEKA            | 3.8.6         | Machine Learning (Árbol de decisión J48)   |
+| Google Gemini   | 1.5 Flash     | IA generativa para explicaciones           |
+| Maven           | 3.6+          | Gestión de dependencias y build            |
+| HTML/CSS/JS     | ES6           | Frontend interactivo                       |
 
 ---
 
 ## Prerrequisitos
 
-### Requerimientos Obligatorios
-- **Java Development Kit (JDK)**: Versión 17 o superior
-- **Maven**: Versión 3.6 o superior
+- **Java 17+**
+- **Maven 3.6+**
+- **API Key de Google Gemini** (obligatoria para explicaciones)
 
-Verifica las instalaciones:
+Verifica instalaciones:
 ```bash
 java -version
-# Salida esperada: java version "17..." (o superior)
-
 mvn -version
-# Salida esperada: Apache Maven 3.6.0 (o superior)
 ```
-
-### Requerimientos Necesarios para Funcionalidad Completa
-- **API Key de Google Gemini**: **OBLIGATORIA** para la funcionalidad de explicaciones
-  - Obtén tu clave gratis en: [Google AI Studio](https://aistudio.google.com/app/apikey)
-  - La cuota gratuita es generosa para uso moderado
-  - Sin esta clave, el endpoint `/explicar` no funcionará
 
 ---
 
 ## Instalación y Ejecución
 
-### 1️⃣ Descargar el Proyecto
-Descarga o clona el repositorio a tu máquina local.
+1. **Clona el repositorio**
+2. **Compila el proyecto**
+   ```bash
+   mvn clean compile
+   ```
+3. **Configura Google Gemini**
+   - Opción A: Edita `src/main/resources/application.properties`:
+     ```properties
+     server.port=8080
+     gemini.api.key=tu_api_key_gemini_aqui
+     ```
+   - Opción B: Variable de entorno (Windows):
+     ```bash
+     set GEMINI_API_KEY=tu_api_key_aqui
+     ```
+4. **Ejecuta la aplicación**
+   ```bash
+   mvn spring-boot:run
+   ```
+   o
+   ```bash
+   mvn clean package
+   java -jar target/calidadsueno-0.0.1-SNAPSHOT.jar
+   ```
 
-### 2️⃣ Compilar el Proyecto
-```bash
-mvn clean compile
-```
-
-Este comando:
-- Limpia compilaciones previas
-- Compila el código fuente
-- Descarga automáticamente las dependencias
-
-### 3️⃣ Configurar Google Gemini (OBLIGATORIO)
-
-Edita `src/main/resources/application.properties` y agrega tu API Key:
-
-```properties
-server.port=8080
-gemini.api.key=tu_api_key_gemini_aqui
-```
-
-Alternativamente, puedes pasar la clave como variable de entorno:
-```bash
-export GEMINI_API_KEY=tu_api_key_aqui
-# O en Windows:
-set GEMINI_API_KEY=tu_api_key_aqui
-```
-
-### 4️⃣ Ejecutar la Aplicación
-
-**Opción A - Ejecución directa (Desarrollo)**:
-```bash
-mvn spring-boot:run
-```
-
-**Opción B - Compilar JAR y ejecutar (Producción)**:
-```bash
-mvn clean package
-java -jar target/calidadsueno-*.jar
-```
-
-**Resultado**:
-```
-[INFO] Iniciando CalidadSuenoApplication
-[INFO] Servidor iniciado en http://localhost:8080
-```
-
-📡 **La aplicación estará disponible en**: http://localhost:8080
+Accede a: [http://localhost:8080](http://localhost:8080)
 
 ---
 
 ## 📡 API Endpoints
 
-### 1️⃣ Clasificar Calidad de Sueño
+### 1. Clasificar Calidad de Sueño
 
-Predice la calidad del sueño usando el modelo WEKA entrenado.
+**Endpoint:**
+- **POST** `/api/calidad-sueno/clasificar`
 
-**URL**: `POST /api/calidad-sueno/clasificar`
-
-**Headers**:
-```
-Content-Type: application/json
-```
-
-**Request Body**:
+**Request Body:**
 ```json
 {
   "percepcion": "Buena",
   "frecuenciaMedicacion": "Una o dos veces en el último mes",
   "duracionSueno": "Normal (6-9 horas)",
   "somnolenciaDiurna": "Normal",
-  "adiccionInternet": "No",
-  "ventaOnline": "No",
-  "comprasOnline": "Sí",
-  "sexo": "Hombre",
-  "nivelAdiccion": "Sin adicción",
-  "latencia": "Normal (5-15 minutos)"
-}
-```
-
-**Response (200)**:
-```json
-{
-  "clasificacion": "Buena"
-}
-```
-
-### 2️⃣ Generar Explicación con Gemini AI
-
-Genera una explicación personalizada del resultado usando Google Gemini AI (especialista en Medicina del Sueño).
-
-**URL**: `POST /api/calidad-sueno/explicar`
-
-**Headers**:
-```
-Content-Type: application/json
-```
-
-**Request Body** (Incluye los 10 parámetros + resultado):
-```json
-{
-  "percepcion": "Buena",
-  "frecuenciaMedicacion": "Una o dos veces en el último mes",
-  "duracionSueno": "Normal (6-9 horas)",
-  "somnolenciaDiurna": "Normal",
-  "adiccionInternet": "No",
-  "ventaOnline": "No",
-  "comprasOnline": "Sí",
-  "sexo": "Hombre",
-  "nivelAdiccion": "Sin adicción",
   "latencia": "Normal (5-15 minutos)",
+  "adiccionInternet": "No",
+  "nivelAdiccion": "Sin adicción",
+  "ventaOnline": "No",
+  "comprasOnline": "Sí",
+  "sexo": "Hombre"
+}
+```
+
+**Response:**
+```json
+{
   "resultado": "Buena"
 }
 ```
 
-**Response (200)**:
+---
+
+### 2. Generar Explicación con Gemini AI
+
+**Endpoint:**
+- **POST** `/api/calidad-sueno/explicar`
+
+**Request Body:**
 ```json
 {
-  "explicacion": "Tu calidad de sueño se clasifica como Buena. Esto se debe a que mantienes una percepción positiva de tu sueño, duermes una duración normal (6-9 horas), no experimentas somnolencia diurna excesiva y tienes una latencia de sueño normal. Aunque utilizas medicamentos ocasionalmente, tu bajo nivel de adicción a internet y tus hábitos moderados con las compras online no están impactando negativamente tu descanso..."
+  "percepcion": "Buena",
+  "frecuenciaMedicacion": "Una o dos veces en el último mes",
+  "duracionSueno": "Normal (6-9 horas)",
+  "somnolenciaDiurna": "Normal",
+  "latencia": "Normal (5-15 minutos)",
+  "adiccionInternet": "No",
+  "nivelAdiccion": "Sin adicción",
+  "ventaOnline": "No",
+  "comprasOnline": "Sí",
+  "sexo": "Hombre",
+  "resultado": "Buena"
 }
 ```
 
-### Parámetros de Entrada
-
-| Parámetro | Tipo | Valores Posibles |
-|-----------|------|------------------|
-| `percepcion` | String | "Buena", "Mala" |
-| `frecuenciaMedicacion` | String | "Ninguna vez en el último mes", "Una o dos veces en el último mes", "Una o más veces a la semana", "Diariamente" |
-| `duracionSueno` | String | "Corta (< 6h)", "Normal (6-9h)", "Larga (> 9h)" |
-| `somnolenciaDiurna` | String | "Normal", "Marginal", "Excesiva" |
-| `adiccionInternet` | String | "Sí", "No" |
-| `ventaOnline` | String | "Sí", "No" |
-| `comprasOnline` | String | "Sí", "No" |
-| `sexo` | String | "Hombre", "Mujer" |
-| `nivelAdiccion` | String | "Sin adicción", "Leve", "Moderada", "Severa" |
-| `latencia` | String | "Patológica (< 5m)", "Normal (5-15m)", "Prolongada (> 15m)" |
-
----
-
-## 🎬 Flujo de la Aplicación
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     1. Usuario completa formulario             │
-│                           (Frontend)                           │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│            2. POST /api/calidad-sueno/clasificar               │
-│                      (CalidadSuenoController)                  │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│             3. ClasificarCalidadSuenoUseCase                    │
-│                   (Lógica de negocio)                          │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│            4. WekaModeloCalidadSueno                            │
-│               (Carga modelo + predice)                         │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│        5. Resultado: "Buena" o "Mala"                           │
-│            (Retorna al Frontend)                               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│         6. POST /api/calidad-sueno/explicar (Opcional)          │
-│          (Si usuario desea explicación detallada)              │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│              7. GeminiService                                   │
-│            (Construye prompt especializado)                    │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│           8. Google Gemini 1.5 Flash API                        │
-│        (IA experta en Medicina del Sueño)                      │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│            9. Explicación personalizada                         │
-│            (Retorna al Frontend)                               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│        10. Usuario ve clasificación + explicación               │
-│                     en el Frontend                             │
-└─────────────────────────────────────────────────────────────────┘
+**Response:**
+```json
+{
+  "explicacion": "Tu calidad de sueño se clasifica como Buena. Esto se debe a que..."
+}
 ```
 
 ---
 
-## 📚 Interfaz Web
+## Parámetros de Entrada
 
-El proyecto incluye un frontend moderno ubicado en `src/main/resources/static/`:
-
-- **index.html**: Formulario interactivo con validación
-- **styles.css**: Diseño responsivo y atractivo
-- **app.js**: Comunicación con la API REST, manejo de respuestas
-
-**Acceso**: http://localhost:8080
-
-### Flujo del Frontend
-
-1. Usuario completa el formulario de 10 campos
-2. Frontend valida los datos
-3. Envía clasificación al endpoint `/clasificar`
-4. Muestra el resultado (Buena/Mala)
-5. Automáticamente envía los datos + resultado a `/explicar`
-6. Muestra la explicación generada por Gemini
-7. Usuario puede completar otro formulario
+| Parámetro            | Tipo   | Valores posibles                                               |
+|----------------------|--------|---------------------------------------------------------------|
+| percepcion           | String | "Buena", "Mala"                                               |
+| frecuenciaMedicacion | String | "Ninguna vez en el último mes", "Una o dos veces en el último mes", etc. |
+| duracionSueno        | String | "Corta (< 6 horas)", "Normal (6-9 horas)", "Larga (> 9 horas)" |
+| somnolenciaDiurna    | String | "Normal", "Marginal", "Excesiva"                              |
+| latencia             | String | "Patológica (< 5 minutos)", "Normal (5-15 minutos)", "Prolongada (> 15 minutos)" |
+| adiccionInternet     | String | "Sí", "No"                                                    |
+| nivelAdiccion        | String | "Sin adicción", "Leve", "Moderada", "Severa"                  |
+| ventaOnline          | String | "Sí", "No"                                                    |
+| comprasOnline        | String | "Sí", "No"                                                    |
+| sexo                 | String | "Hombre", "Mujer"                                             |
 
 ---
 
-## ⚙️ Configuración
+## Interfaz Web
 
-### Archivo: `src/main/resources/application.properties`
+Frontend interactivo ubicado en `src/main/resources/static/`:
+
+- **index.html**: Formulario con 10 campos de entrada
+- **styles.css**: Estilos responsivos
+- **app.js**: Lógica frontend y comunicación con API REST
+- **images/**: Imágenes dinámicas según resultado (bueno/malo)
+
+**Características:**
+- Validación de campos requeridos
+- Cambio dinámico de color e imagen según predicción
+- Loading spinner durante solicitudes
+- Explicación generada por Gemini AI
+
+---
+
+## Configuración
+
+### application.properties
 
 ```properties
-# Puerto del servidor
 server.port=8080
-
-# API Key de Google Gemini (necesario para explicaciones)
-gemini.api.key=tu_api_key_aqui
+server.servlet.context-path=/
+spring.web.cors.allowed-origins=*
+gemini.api.key=${GEMINI_API_KEY}
 ```
 
-### Cambiar el Puerto
+**Variables de entorno recomendadas:**
+- `GEMINI_API_KEY`: Tu API Key de Google Gemini
 
-Si el puerto 8080 está en uso, modifica:
+---
 
-```properties
-server.port=9090
-```
+## Solución de Problemas
 
-Luego accede a: http://localhost:9090
+| Problema | Solución |
+|----------|----------|
+| Java/Maven no instalado | Instala y verifica con `java -version` y `mvn -version` |
+| Puerto 8080 ocupado | Cambia `server.port` en `application.properties` |
+| Modelo WEKA no cargado | Verifica que `Ciencias exactas_Unpruned model.model` esté en `src/main/resources/` |
+| `/explicar` no funciona | Configura `GEMINI_API_KEY` y verifica conexión a internet |
+| CORS bloqueado | Habilitado globalmente en `@CrossOrigin(origins = "*")` |
 
-### Configurar Gemini API Key
+---
 
-1. Ve a [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Haz clic en "Create API Key"
-3. Selecciona tu proyecto y crea la clave
-4. Copia la clave y actualiza `application.properties`:
+## Información del Modelo WEKA
 
-```properties
-gemini.api.key=tu_clave_completa_aqui
-```
+- **Nombre**: Ciencias exactas_Unpruned model
+- **Algoritmo**: J48 (Árbol de decisión sin pruning)
+- **Atributos de entrada**: 10 características del usuario
+- **Atributo de salida**: "Calidad de sueño" (Buena/Mala)
+- **Tipología**: Clasificador determinístico
+- **Velocidad**: Predicción instantánea
 
-5. Reinicia la aplicación:
+---
+
+## Arquitectura del Proyecto
+
+### Clean Architecture - 4 Capas
+
+1. **Interfaces (REST)**
+   - Controladores y DTOs
+   - Expone endpoints HTTP
+
+2. **Application (Casos de Uso)**
+   - `ClasificarCalidadSuenoUseCase`: Orquesta la lógica de negocio
+
+3. **Domain (Núcleo)**
+   - `CasoCalidadSueno`: Entidad de dominio con 10 atributos
+
+4. **Infrastructure (Adaptadores)**
+   - `WekaModeloCalidadSueno`: Carga y ejecuta modelo WEKA
+   - `GeminiService`: Integración con Google Gemini
+   - DTOs específicos de respuesta
+
+---
+
+## Notas Importantes
+
+- **Clean Architecture**: Separación clara de responsabilidades por capas
+- **CORS habilitado**: Permite acceso desde cualquier origen (usar con cuidado en producción)
+- **API Key Gemini**: No la publiques en el repositorio, usa variables de entorno
+- **Modelo WEKA**: Los valores de entrada deben coincidir exactamente con las etiquetas del modelo entrenado
+- **Requisitos mínimos**: Java 17+, 512 MB RAM, conexión a internet para Gemini
+
+---
+
+## Uso desde Terminal (cURL)
+
+**Clasificar:**
 ```bash
-mvn spring-boot:run
+curl -X POST http://localhost:8080/api/calidad-sueno/clasificar \
+  -H "Content-Type: application/json" \
+  -d '{
+    "percepcion": "Buena",
+    "frecuenciaMedicacion": "Una o dos veces en el último mes",
+    "duracionSueno": "Normal (6-9 horas)",
+    "somnolenciaDiurna": "Normal",
+    "latencia": "Normal (5-15 minutos)",
+    "adiccionInternet": "No",
+    "nivelAdiccion": "Sin adicción",
+    "ventaOnline": "No",
+    "comprasOnline": "Sí",
+    "sexo": "Hombre"
+  }'
 ```
----
-
-## 🐛 Solución de Problemas
-
-### Error: "Java version X is not supported"
-**Solución**: Instala Java 17 o superior desde [oracle.com](https://www.oracle.com/java/technologies/downloads/).
-```bash
-java -version  # Verifica la versión
-```
-
-### Error: "Maven command not found"
-**Solución**: 
-1. Instala Maven desde [maven.apache.org](https://maven.apache.org/download.cgi)
-2. Añade Maven al PATH del sistema
-3. Abre una nueva terminal y verifica:
-```bash
-mvn -version
-```
-
-### Error: "Puerto 8080 ya está en uso"
-**Solución**: Cambia el puerto en `application.properties`:
-```properties
-server.port=8081
-```
-
-### Error: "No se puede cargar el modelo WEKA"
-**Solución**: Verifica que el archivo `Ciencias exactas_Unpruned model.model` esté en:
-- `src/main/resources/` (en desarrollo)
-- O incluido en el JAR compilado
-
-### Error: Endpoint `/explicar` no funciona
-**Solución 1 - API Key no configurada**:
-- Obtén tu clave en [Google AI Studio](https://aistudio.google.com/app/apikey)
-- Añádela a `application.properties`
-
-**Solución 2 - API Key inválida**:
-- Verifica que la clave sea correcta
-- Intenta regenerar una nueva clave en Google AI Studio
-
-**Solución 3 - Sin conexión a internet**:
-- Verifica tu conexión de Red
-- Intenta con `curl` o `Postman` para verificar conectividad
-
-**Solución 4 - Límite de cuota excedido**:
-- Google Gemini tiene límites de uso gratuitos
-- Consulta tu cuota en [Google Cloud Console](https://console.cloud.google.com/)
 
 ---
 
-## 🎓 Información del Modelo WEKA
-
-### Dataset
-- **Registros**: 92 estudiantes (Ciencias Exactas e Ingenierías)
-- **Fuente**: Encuesta estructurada sobre hábitos de sueño
-- **Modelo**: J48 (Árbol de decisión)
-- **Archivo**: `Ciencias exactas_Unpruned model.model`
-- **Ubicación en desarrollo**: `src/main/resources/`
-- **Ubicación en JAR compilado**: `classpath:Ciencias exactas_Unpruned model.model`
-
-### Atributos de Entrada
-
-El modelo espera exactamente estos 10 atributos de entrada:
-
-1. **Percepción propia del sueño** (String: "Buena", "Mala")
-2. **Frecuencia de medicamentos** (String: "Ninguna vez en el último mes", "Una o dos veces en el último mes", "Una o más veces a la semana", "Diariamente")
-3. **Duración del sueño** (String: "Corta (< 6h)", "Normal (6-9h)", "Larga (> 9h)")
-4. **Somnolencia durante el día** (String: "Normal", "Marginal", "Excesiva")
-5. **Adicción a la Internet** (String: "Sí", "No")
-6. **Nivel de adicción a internet** (String: "Sin adicción", "Leve", "Moderada", "Severa")
-7. **Uso de internet para vender** (String: "Sí", "No")
-8. **Uso de internet para comprar** (String: "Sí", "No")
-9. **Sexo** (String: "Hombre", "Mujer")
-10. **Latencia del sueño** (String: "Patológica (< 5m)", "Normal (5-15m)", "Prolongada (> 15m)")
-
-### Variable de Salida
-- **Calidad de Sueño**: "Buena" o "Mala" (clasificación binaria)
-
-### Rendimiento del Modelo
-- **Conjuntos de Entrenamiento**: 92 registros de estudiantes
-- **Algoritmo**: J48 (Árbol de Decisión Pruned/No Pruned)
-- **Modo Actual**: Sin pruning para máxima precisión en el árbol de decisión
-- **Tipo de Predicción**: Determinística (el mismo input siempre da el mismo output)
-- **Velocidad**: Predicciones instantáneas (< 10ms por clasificación)
-
----
-
-## 📝 Notas Importantes
-
-### Arquitectura y Diseño Actual
-- ✅ **Arquitectura limpia** (Clean Architecture) - Capas separadas: Interfaces, Application, Domain, Infrastructure
-- ✅ **Separación de responsabilidades** - Cada clase tiene un propósito único bien definido
-- ✅ **CORS habilitado** - `@CrossOrigin(origins = "*")` permite requests desde cualquier origen
-- ✅ **DTOs implementados** - Transferencia de datos segura entre capas
-- ✅ **Spring Boot 3.2.2** - Framework moderno y optimizado
-
-### Carga del Modelo WEKA
-- ⚠️ **Importante**: El archivo `Ciencias exactas_Unpruned model.model` DEBE estar en el classpath
-- Se carga **una única vez** al inicializar la aplicación
-- El modelo se deserializa del archivo binario `.model`
-- Las predicciones son **rápidas y determinísticas** (siempre el mismo resultado para los mismos inputs)
-
-### Integración con Google Gemini AI
-- ✅ **Altamente recomendado**: Configurar una API Key válida para explicaciones inteligentes
-- ℹ️ **Sin API Key**: El endpoint `/explicar` retornará error 500
-- 🔐 **Seguridad**: Nunca almacenes API Keys en repositorios públicos - usa variables de entorno
-- 💡 **Cuota gratuita**: La API gratuita de Gemini tiene límites mensuales suficientes para desarrollo
-
-### Seguridad
-- **🔐 CRÍTICO**: Nunca expongas tu API Key de Gemini en repositorios públicos
-- **Producción**: Usa **variables de entorno** en lugar de `application.properties` hardcodeado
-  ```bash
-  export GEMINI_API_KEY=tu_api_key_aqui
-  ```
-- **HTTPS**: Considera HTTPS en producción (actualmente solo HTTP en desarrollo)
-- **Validación**: Todos los inputs se validan en el servidor antes de procesar
-- **CORS**: Actualmente habilitado para cualquier origen - **considera restricciones en producción**
-
-### Requisitos de Servidor
-- **Java 17+** instalado y en el PATH del sistema
-- **512 MB RAM mínimo** disponible (256 MB es el mínimo teórico)
-- **50 MB espacio en disco** para el JAR compilado
-- **Conexión a Internet** para la funcionalidad Gemini AI (OBLIGATORIA para `/explicar`)
-- **Puertos accesibles**: 8080 por defecto (modificable en `application.properties`)
-
----
-
-**Última actualización**: Marzo 8, 2026  
-**Versión**: 0.0.1 (En Desarrollo)  
-**Estado**: Funcional - Todos los endpoints disponibles  
+**Última actualización**: Marzo 16, 2026  
+**Versión**: 0.0.1-SNAPSHOT  
+**Estado**: Funcional - Todos los endpoints disponibles
 

@@ -13,6 +13,6 @@ public class ClasificarCalidadSuenoUseCase {
     }
 
     public String ejecutar(CasoCalidadSueno caso) throws Exception {
-        return modelo.clasificar(caso);
+        return modelo.evaluar(caso);
     }
 }

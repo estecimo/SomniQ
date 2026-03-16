@@ -1,46 +1,84 @@
-async function enviar() {
-  try {
-    const selects = document.querySelectorAll('select');
-    for (let select of selects) {
-      if (select.value === "") {
-        alert("Por favor, completa todos los campos del formulario.");
-        select.focus();
-        return;
-      }
-    }
+let datosFormulario = {};
+let resultadoPrediccion = "";
 
-    const data = {
-      percepcion: document.getElementById("percepcion").value,
-      frecuenciaMedicacion: document.getElementById("frecuenciaMedicacion").value,
-      duracionSueno: document.getElementById("duracionSueno").value,
-      somnolenciaDiurna: document.getElementById("somnolenciaDiurna").value,
-      adiccionInternet: document.getElementById("adiccionInternet").value,
-      ventaOnline: document.getElementById("ventaOnline").value,
-      comprasOnline: document.getElementById("comprasOnline").value,
-      sexo: document.getElementById("sexo").value,
-      nivelAdiccion: document.getElementById("nivelAdiccion").value, 
-      latencia: document.getElementById("latencia").value           
+function obtenerDatos() {
+    return {
+        sexo: document.getElementById("sexo").value,
+        percepcion: document.getElementById("percepcion").value,
+        frecuenciaMedicacion: document.getElementById("frecuenciaMedicacion").value,
+        duracionSueno: document.getElementById("duracionSueno").value,
+        somnolenciaDiurna: document.getElementById("somnolenciaDiurna").value,
+        latencia: document.getElementById("latencia").value,
+        adiccionInternet: document.getElementById("adiccionInternet").value,
+        nivelAdiccion: document.getElementById("nivelAdiccion").value,
+        ventaOnline: document.getElementById("ventaOnline").value,
+        comprasOnline: document.getElementById("comprasOnline").value
     };
+}
 
-    const res = await fetch("http://localhost:8080/api/calidad-sueno/clasificar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+function resetearEstadoExplicacion() {
+    // 1. Aseguramos que el contenedor padre sea visible
+    const container = document.getElementById("explicacion-container");
+    container.style.display = "block"; 
 
-    if (!res.ok) throw new Error("Error 500: El modelo no reconoció un valor.");
+    // 2. Habilitamos el botón y limpiamos lo demás
+    document.getElementById("btn-explicar").style.display = "inline-block";
+    document.getElementById("loading-explicacion").style.display = "none";
+    document.getElementById("texto-explicacion").style.display = "none";
+    document.getElementById("texto-explicacion").innerText = "";
+}
 
-    const dto = await res.json();
-    const resultadoElement = document.getElementById("resultado");
-    resultadoElement.innerText = "La predicción es: " + dto.resultado;
-    resultadoElement.style.color = dto.resultado === "Buena" ? "#28a745" : "#d9534f";
+async function enviar() {
+    try {
+        const selects = document.querySelectorAll('select');
+        for (let select of selects) {
+            if (select.value === "") {
+                alert("Por favor, completa todos los campos.");
+                select.focus();
+                return;
+            }
+        }
 
-    document.getElementById("explicacion-container").style.display = "block";
+        datosFormulario = obtenerDatos();
 
-  } catch (error) {
-    console.error("Error:", error);
-    document.getElementById("resultado").innerText = "Error: " + error.message;
-  }
+        const res = await fetch("http://localhost:8080/api/calidad-sueno/clasificar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosFormulario)
+        });
+
+        console.log("Datos enviados al servidor:", datosFormulario);
+        console.log("Respuesta del servidor:", res);
+
+        if (!res.ok) throw new Error("Error en el servidor al clasificar.");
+
+        const dto = await res.json();
+        const resultadoPrediccion = dto.resultado; // Valor puro ("Buena" o "Mala")
+
+        // 1. Obtener todos los elementos del DOM a modificar
+        const resElement = document.getElementById("resultado");
+        const imgContainer = document.getElementById("resultado-imagen-container");
+        const imgElement = document.getElementById("resultado-imagen");
+
+        // 2. Actualizar el texto del resultado
+        resElement.innerText = `La predicción es: ${resultadoPrediccion}`;
+
+        // 3. Evaluar si es "Buena" de forma segura
+        const esBuena = resultadoPrediccion.toUpperCase() === "BUENA";
+
+        // 4. Asignar el color y la imagen dinámicamente
+        resElement.style.color = esBuena ? "#28a745" : "#d9534f";
+        imgElement.src = esBuena ? "images/geminigoodspleep.webp" : "images/geminibadsleep.webp";
+
+        // 5. Hacer visible el contenedor de la imagen
+        imgContainer.style.display = "block";
+
+        resetearEstadoExplicacion();
+
+    } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("resultado").innerText = "Error: " + error.message;
+    }
 }
 
 async function pedirExplicacion() {
@@ -50,29 +88,15 @@ async function pedirExplicacion() {
 
     btn.style.display = "none";
     loading.style.display = "block";
-    texto.style.display = "none";
-
-    const resultadoTexto = document.getElementById("resultado").innerText.replace("La predicción es: ", "");
-
-    const data = {
-        percepcion: document.getElementById("percepcion").value,
-        frecuenciaMedicacion: document.getElementById("frecuenciaMedicacion").value,
-        duracionSueno: document.getElementById("duracionSueno").value,
-        somnolenciaDiurna: document.getElementById("somnolenciaDiurna").value,
-        adiccionInternet: document.getElementById("adiccionInternet").value,
-        ventaOnline: document.getElementById("ventaOnline").value,
-        comprasOnline: document.getElementById("comprasOnline").value,
-        sexo: document.getElementById("sexo").value,
-        nivelAdiccion: document.getElementById("nivelAdiccion").value, 
-        latencia: document.getElementById("latencia").value,
-        resultado: resultadoTexto // Importante para Gemini
-    };
 
     try {
+        // Combinamos los datos del formulario con el resultado obtenido
+        const bodyExplicacion = { ...datosFormulario, resultado: resultadoPrediccion };
+
         const res = await fetch("http://localhost:8080/api/calidad-sueno/explicar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(bodyExplicacion)
         });
 
         if (!res.ok) throw new Error("No se pudo obtener la explicación.");
@@ -82,7 +106,7 @@ async function pedirExplicacion() {
         texto.style.display = "block";
     } catch (error) {
         console.error("Error en Gemini:", error);
-        texto.innerText = "Hubo un problema al generar la explicación. Intente de nuevo.";
+        texto.innerText = "No se pudo generar la explicación.";
         texto.style.display = "block";
         btn.style.display = "inline-block";
     } finally {
