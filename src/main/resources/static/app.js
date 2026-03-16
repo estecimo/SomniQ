@@ -18,6 +18,11 @@ async function enviar() {
   document.getElementById("texto-explicacion").style.display = "none";
   document.getElementById("btn-explicar").style.display = "inline-block";
   document.getElementById("btn-explicar").disabled = false;
+  
+  const imgContainer = document.getElementById("resultado-imagen-container");
+  if (imgContainer) {
+    imgContainer.style.display = "none";
+  }
 
   try {
     const res = await fetch("/api/calidad-sueno/evaluar", {
@@ -35,10 +40,17 @@ async function enviar() {
     resultadoElement.innerText = "Resultado: " + json.resultado.toUpperCase();
     
     // Simple color coding
+    const imgContainer = document.getElementById("resultado-imagen-container");
+    const imgElement = document.getElementById("resultado-imagen");
+    
     if (json.resultado.toUpperCase() === "BUENA") {
         resultadoElement.style.color = "green";
+        imgElement.src = "images/geminigoodspleep.webp";
+        imgContainer.style.display = "block";
     } else {
         resultadoElement.style.color = "red";
+        imgElement.src = "images/geminibadsleep.webp";
+        imgContainer.style.display = "block";
     }
 
     // Show explanation button

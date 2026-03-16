@@ -7,8 +7,19 @@
   </head>
   <body>
     <div class="card">
-      <h1 style="text-align: center">Campus de Ciencias de la Salud</h1>
-      <h2>Calidad de Sueño</h2>
+      <div style="text-align: center; margin-bottom: 1rem;">
+        <img src="images/uady.png" alt="Logo UADY" style="max-width: 100px; height: auto;" />
+      </div>
+      <h2 style="text-align: center">Campus de Ciencias de la Salud</h2>
+      <h3 style="text-align: center">Calidad de Sueño</h3>
+
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
+          Este formulario tiene como objetivo evaluar tu calidad de sueño basándose en tus hábitos y percepciones recientes. 
+          Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para brindarte un 
+          diagnóstico preliminar y una explicación personalizada.
+        </p>
+      </div>
 
       <div class="label-container">
         <label for="percepcion" style="margin: 0"
@@ -29,7 +40,7 @@
       </select>
 
       <div class="label-container">
-        <label for="duracion" style="margin: 0">Duración total de sueño</label>
+        <label for="duracion" style="margin: 0">¿Cuál es su duración total de sueño?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
           <span class="tooltiptext"
@@ -40,14 +51,14 @@
       </div>
       <select id="duracion">
         <option value="" disabled selected hidden></option>
-        <option value="Normal">6-9 horas</option>
-        <option value="Corta">< 6 horas</option>
-        <option value="Larga">> 9 horas</option>
+        <option value="Normal">Entre 6 y 9 horas</option>
+        <option value="Corta">Menos de 6 horas</option>
+        <option value="Larga">Más de 9 horas</option>
       </select>
 
       <div class="label-container">
         <label for="latencia" style="margin: 0"
-          >Clasificación de latencia</label
+          >¿Cuál es su clasificación de latencia?</label
         >
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
@@ -59,9 +70,9 @@
       </div>
       <select id="latencia">
         <option value="" disabled selected hidden></option>
-        <option value="Normal">5-15 minutos</option>
-        <option value="Prolongada">> 15 minutos</option>
-        <option value="Patologica">< 5 minutos</option>
+        <option value="Normal">Entre 5 y 15 minutos</option>
+        <option value="Prolongada">Más de 15 minutos</option>
+        <option value="Patologica">Menos de 5 minutos</option>
       </select>
 
       <div class="label-container">
@@ -85,6 +96,10 @@
       <button onclick="enviar()">Evaluar Calidad</button>
 
       <p id="resultado"></p>
+
+      <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
+        <img id="resultado-imagen" src="" alt="Resultado" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
+      </div>
 
       <div id="explicacion-container" style="display: none; text-align: center">
         <button

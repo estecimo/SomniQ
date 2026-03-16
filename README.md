@@ -32,6 +32,8 @@ WekaNode48/
 │   │   │   ├── domain/
 │   │   │   │   └── CasoCalidadSueno.java
 │   │   │   ├── infrastructure/
+│   │   │   │   ├── dto/
+│   │   │   │   │   └── GeminiResponseDTO.java
 │   │   │   │   ├── ServicioEvaluacionJ48.java   # Integración WEKA
 │   │   │   │   └── GeminiService.java           # Integración Gemini API
 │   │   │   └── interfaces/
@@ -42,8 +44,11 @@ WekaNode48/
 │   │   │           └── ExplicacionRequestDTO.java
 │   │   └── resources/
 │   │       ├── application.properties           # Configuración (API Keys)
-│   │       ├── modelo_sueno_j48.model           # Modelo WEKA entrenado
+│   │       ├── cienciasdelasalud.model          # Modelo WEKA entrenado
 │   │       └── static/                          # Frontend
+│   │           ├── images/
+│   │           │   ├── geminibadsleep.webp
+│   │           │   └── geminigoodspleep.webp
 │   │           ├── index.html
 │   │           ├── styles.css
 │   │           └── app.js
