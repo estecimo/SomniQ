@@ -6,11 +6,17 @@ async function enviar() {
     covid: document.getElementById("covid").value
   };
 
+  const errorMessage = document.getElementById("error-message");
+
   // Validation
   if (!data.percepcionCalidad || !data.duracionSueno || !data.latencia || !data.covid) {
-    alert("Por favor, responde todas las preguntas antes de evaluar.");
+    errorMessage.innerText = "Por favor, responde todas las preguntas antes de evaluar.";
+    errorMessage.style.display = "block";
     return;
   }
+
+  // Clear previous error message if validation passes
+  errorMessage.style.display = "none";
 
   // Reset UI elements
   document.getElementById("explicacion-container").style.display = "none";
