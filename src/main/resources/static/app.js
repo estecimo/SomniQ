@@ -17,11 +17,11 @@ function obtenerDatos() {
 }
 
 function resetearEstadoExplicacion() {
-    // 1. Aseguramos que el contenedor padre sea visible
+    // Asegurar que el contenedor padre sea visible
     const container = document.getElementById("explicacion-container");
     container.style.display = "block"; 
 
-    // 2. Habilitamos el botón y limpiamos lo demás
+    // Habilitar el botón y limpiar lo demás
     document.getElementById("btn-explicar").style.display = "inline-block";
     document.getElementById("loading-explicacion").style.display = "none";
     document.getElementById("texto-explicacion").style.display = "none";
@@ -41,7 +41,7 @@ async function enviar() {
 
         datosFormulario = obtenerDatos();
 
-        const res = await fetch("http://localhost:8080/api/calidad-sueno/clasificar", {
+        const res = await fetch("/api/calidad-sueno/clasificar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datosFormulario)
@@ -55,22 +55,22 @@ async function enviar() {
         const dto = await res.json();
         const resultadoPrediccion = dto.resultado; // Valor puro ("Buena" o "Mala")
 
-        // 1. Obtener todos los elementos del DOM a modificar
+        // Obtener todos los elementos del DOM a modificar
         const resElement = document.getElementById("resultado");
         const imgContainer = document.getElementById("resultado-imagen-container");
         const imgElement = document.getElementById("resultado-imagen");
 
-        // 2. Actualizar el texto del resultado
+        // Actualizar el texto del resultado
         resElement.innerText = `La predicción es: ${resultadoPrediccion}`;
 
-        // 3. Evaluar si es "Buena" de forma segura
+        // Evaluar si es "Buena" de forma segura
         const esBuena = resultadoPrediccion.toUpperCase() === "BUENA";
 
-        // 4. Asignar el color y la imagen dinámicamente
+        // Asignar el color y la imagen dinámicamente
         resElement.style.color = esBuena ? "#28a745" : "#d9534f";
         imgElement.src = esBuena ? "images/geminigoodspleep.webp" : "images/geminibadsleep.webp";
 
-        // 5. Hacer visible el contenedor de la imagen
+        // Hacer visible el contenedor de la imagen
         imgContainer.style.display = "block";
 
         resetearEstadoExplicacion();
@@ -93,7 +93,7 @@ async function pedirExplicacion() {
         // Combinamos los datos del formulario con el resultado obtenido
         const bodyExplicacion = { ...datosFormulario, resultado: resultadoPrediccion };
 
-        const res = await fetch("http://localhost:8080/api/calidad-sueno/explicar", {
+        const res = await fetch("/api/calidad-sueno/explicar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(bodyExplicacion)
