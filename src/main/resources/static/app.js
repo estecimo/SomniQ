@@ -29,11 +29,17 @@ function resetearEstadoExplicacion() {
 }
 
 async function enviar() {
+    const divError = document.getElementById("mensaje-error");
+    const selects = document.querySelectorAll('select');
+    
+    divError.style.display = "none";
+    selects.forEach(s => s.style.borderColor = "#ccc");
+
     try {
-        const selects = document.querySelectorAll('select');
         for (let select of selects) {
             if (select.value === "") {
-                alert("Por favor, completa todos los campos.");
+                divError.style.display = "block";
+                select.style.borderColor = "#d9534f";
                 select.focus();
                 return;
             }
@@ -77,7 +83,8 @@ async function enviar() {
 
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById("resultado").innerText = "Error: " + error.message;
+        document.getElementById("resultado").innerText = "Hubo un problema: " + error.message;
+        document.getElementById("resultado").style.color = "#d9534f";
     }
 }
 
@@ -113,3 +120,18 @@ async function pedirExplicacion() {
         loading.style.display = "none";
     }
 }
+
+// Ocultar mensaje de error y restaurar borde al cambiar cualquier select
+const todosLosSelects = document.querySelectorAll('select');
+
+todosLosSelects.forEach(select => {
+    select.addEventListener('change', () => {
+        const divError = document.getElementById("mensaje-error");
+        
+        if (divError.style.display === "block") {
+            divError.style.display = "none";
+        }
+        
+        select.style.borderColor = "#ccc";
+    });
+});
