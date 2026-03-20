@@ -10,15 +10,14 @@
 
 <body>
   <div class="card">
-    <div style="text-align: center; margin-bottom: 1rem;">
-      <img src="images/uady.svg" alt="Logo UADY"
-        style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
+    <div class="logo-container">
+      <img src="images/uady.svg" alt="Logo UADY" class="logo-img" />
     </div>
-    <h2 style="text-align: center">Campus de Ciencias de la Salud</h2>
-    <h3 style="text-align: center">Calidad de Sueño</h3>
+    <h2>Campus de Ciencias de la Salud</h2>
+    <h3>Calidad de Sueño</h3>
 
-    <div style="text-align: center; margin-bottom: 1.5rem;">
-      <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
+    <div class="description-container">
+      <p class="description-text">
         Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos y percepciones
         recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para
         brindarte un diagnóstico preliminar y una explicación personalizada.
@@ -28,59 +27,59 @@
     <form id="evaluation-form" onsubmit="enviar(event)">
 
       <div class="label-container">
-        <label for="percepcion" style="margin: 0">¿Cómo percibe su calidad de sueño?</label>
+        <label for="percepcion" class="input-label">¿Cómo percibe su calidad de sueño?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext">Es tu opinión personal sobre qué tan bien sientes que descansas al
+          <span class="tooltiptext" id="tooltip-percepcion">Es tu opinión personal sobre qué tan bien sientes que descansas al
             dormir.</span>
         </div>
       </div>
-      <select id="percepcion" required>
-        <option value="" disabled selected hidden></option>
+      <select id="percepcion" required aria-describedby="tooltip-percepcion">
+        <option value="" disabled selected hidden>Selecciona una opción...</option>
         <option value="Buena">Buena</option>
         <option value="Mala">Mala</option>
       </select>
 
       <div class="label-container">
-        <label for="duracion" style="margin: 0">¿Cuál es su duración total de sueño?</label>
+        <label for="duracion" class="input-label">¿Cuál es su duración total de sueño?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext">La cantidad total de horas que duermes habitualmente cada
+          <span class="tooltiptext" id="tooltip-duracion">La cantidad total de horas que duermes habitualmente cada
             noche.</span>
         </div>
       </div>
-      <select id="duracion" required>
-        <option value="" disabled selected hidden></option>
+      <select id="duracion" required aria-describedby="tooltip-duracion">
+        <option value="" disabled selected hidden>Selecciona una opción...</option>
         <option value="Normal">Entre 6 y 9 horas</option>
         <option value="Corta">Menos de 6 horas</option>
         <option value="Larga">Más de 9 horas</option>
       </select>
 
       <div class="label-container">
-        <label for="latencia" style="margin: 0">¿Cuál es su clasificación de latencia?</label>
+        <label for="latencia" class="input-label">¿Cuál es su clasificación de latencia?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext">El tiempo que tardas en quedarte dormido desde que te acuestas en
+          <span class="tooltiptext" id="tooltip-latencia">El tiempo que tardas en quedarte dormido desde que te acuestas en
             la cama.</span>
         </div>
       </div>
-      <select id="latencia" required>
-        <option value="" disabled selected hidden></option>
+      <select id="latencia" required aria-describedby="tooltip-latencia">
+        <option value="" disabled selected hidden>Selecciona una opción...</option>
         <option value="Normal">Entre 5 y 15 minutos</option>
         <option value="Prolongada">Más de 15 minutos</option>
         <option value="Patologica">Menos de 5 minutos</option>
       </select>
 
       <div class="label-container">
-        <label for="covid" style="margin: 0">¿Tuvo COVID-19 en los últimos 6 meses?</label>
+        <label for="covid" class="input-label">¿Tuvo COVID-19 en los últimos 6 meses?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext">Si has sido diagnosticado con COVID-19 recientemente, ya que puede
+          <span class="tooltiptext" id="tooltip-covid">Si has sido diagnosticado con COVID-19 recientemente, ya que puede
             afectar tus patrones de sueño.</span>
         </div>
       </div>
-      <select id="covid" required>
-        <option value="" disabled selected hidden></option>
+      <select id="covid" required aria-describedby="tooltip-covid">
+        <option value="" disabled selected hidden>Selecciona una opción...</option>
         <option value="No">No</option>
         <option value="Si">Sí</option>
       </select>
@@ -88,34 +87,27 @@
       <button id="btn-evaluar" type="submit">Evaluar Calidad</button>
     </form>
 
-    <div id="loading-evaluacion" style="display: none; margin-top: 1rem; text-align: center;">
+    <div id="loading-evaluacion" class="loading-container">
       <div class="spinner"></div>
-      <p style="color: #666; margin-top: 5px">Evaluando calidad de sueño...</p>
+      <p class="loading-text">Evaluando calidad de sueño...</p>
     </div>
 
     <p id="resultado"></p>
 
-    <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
-      <img id="resultado-imagen" src="" alt="Resultado"
-        style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
+    <div id="resultado-imagen-container" class="resultado-imagen-container">
+      <img id="resultado-imagen" src="" alt="Resultado" class="resultado-imagen" />
     </div>
 
-    <div id="explicacion-container" style="display: none; text-align: center">
-      <button id="btn-explicar" onclick="pedirExplicacion()" style="background-color: #28a745; margin-top: 1rem">
+    <div id="explicacion-container" class="explicacion-container">
+      <button id="btn-explicar" onclick="pedirExplicacion()" class="btn-success">
         ¿Qué significa este resultado?
       </button>
 
-      <div id="loading-explicacion" style="display: none; margin-top: 1rem">
+      <div id="loading-explicacion" class="loading-container">
         <div class="spinner"></div>
-        <p style="color: #666; margin-top: 5px">Generando explicación...</p>
+        <p class="loading-text">Generando explicación...</p>
       </div>
-      <p id="texto-explicacion" style="
-            margin-top: 1rem;
-            text-align: justify;
-            border-top: 1px dashed #ccc;
-            padding-top: 1rem;
-            display: none;
-          "></p>
+      <p id="texto-explicacion" class="texto-explicacion"></p>
     </div>
 
     <div class="disclaimer">
