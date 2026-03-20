@@ -31,19 +31,30 @@ function resetearEstadoExplicacion() {
 async function enviar() {
     const divError = document.getElementById("mensaje-error");
     const selects = document.querySelectorAll('select');
+
+    const btnEvaluar = document.querySelector("button[onclick='enviar()']");
+    const loadingEvaluacion = document.getElementById("loading-evaluacion");
+    const resElement = document.getElementById("resultado");
+    const imgContainer = document.getElementById("resultado-imagen-container");
+    const imgElement = document.getElementById("resultado-imagen");
     
     divError.style.display = "none";
     selects.forEach(s => s.style.borderColor = "#ccc");
 
-    try {
-        for (let select of selects) {
-            if (select.value === "") {
-                divError.style.display = "block";
-                select.style.borderColor = "#d9534f";
-                select.focus();
-                return;
-            }
+    for (let select of selects) {
+        if (select.value === "") {
+            divError.style.display = "block";
+            select.style.borderColor = "#d9534f";
+            select.focus();
+            return;
         }
+    }
+
+    try {
+        btnEvaluar.style.display = "none";      // Ocultamos el botón
+        loadingEvaluacion.style.display = "block"; // Mostramos el spinner
+        resElement.innerText = "";              // Limpiamos resultados anteriores
+        imgContainer.style.display = "none";    // Ocultamos imagen anterior
 
         datosFormulario = obtenerDatos();
 
@@ -56,24 +67,15 @@ async function enviar() {
         if (!res.ok) throw new Error("Error en el servidor al clasificar.");
 
         const dto = await res.json();
-        resultadoPrediccion = dto.resultado; // Valor puro ("Buena" o "Mala")
+        resultadoPrediccion = dto.resultado; 
 
-        // Obtener todos los elementos del DOM a modificar
-        const resElement = document.getElementById("resultado");
-        const imgContainer = document.getElementById("resultado-imagen-container");
-        const imgElement = document.getElementById("resultado-imagen");
-
-        // Actualizar el texto del resultado
         resElement.innerText = `La predicción es: ${resultadoPrediccion}`;
 
-        // Evaluar si es "Buena" de forma segura
         const esBuena = resultadoPrediccion.toUpperCase() === "BUENA";
 
-        // Asignar el color y la imagen dinámicamente
         resElement.style.color = esBuena ? "#28a745" : "#d9534f";
         imgElement.src = esBuena ? "images/geminigoodspleep.webp" : "images/geminibadsleep.webp";
 
-        // Hacer visible el contenedor de la imagen
         imgContainer.style.display = "block";
 
         resetearEstadoExplicacion();
@@ -82,7 +84,11 @@ async function enviar() {
         console.error("Error:", error);
         document.getElementById("resultado").innerText = "Hubo un problema: " + error.message;
         document.getElementById("resultado").style.color = "#d9534f";
+    }finally {
+        loadingEvaluacion.style.display = "none";
+        btnEvaluar.style.display = "block";
     }
+
 }
 
 async function pedirExplicacion() {
