@@ -53,13 +53,10 @@ async function enviar() {
             body: JSON.stringify(datosFormulario)
         });
 
-        console.log("Datos enviados al servidor:", datosFormulario);
-        console.log("Respuesta del servidor:", res);
-
         if (!res.ok) throw new Error("Error en el servidor al clasificar.");
 
         const dto = await res.json();
-        const resultadoPrediccion = dto.resultado; // Valor puro ("Buena" o "Mala")
+        resultadoPrediccion = dto.resultado; // Valor puro ("Buena" o "Mala")
 
         // Obtener todos los elementos del DOM a modificar
         const resElement = document.getElementById("resultado");

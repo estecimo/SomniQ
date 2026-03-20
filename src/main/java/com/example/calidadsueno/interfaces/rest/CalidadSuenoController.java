@@ -41,8 +41,7 @@ public class CalidadSuenoController {
 
     @PostMapping("/explicar") 
     public Map<String, String> explicar(@RequestBody ExplicacionRequestDTO req) {
-        // Le pasamos el objeto DTO completo (que contiene los 10 campos + el resultado)
-        // al servicio de Gemini
+        
         String explicacion = geminiService.getExplanation(req, req.resultado);
         
         Map<String, String> response = new HashMap<>();

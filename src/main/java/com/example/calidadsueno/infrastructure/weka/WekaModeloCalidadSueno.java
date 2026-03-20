@@ -51,7 +51,7 @@ public class WekaModeloCalidadSueno {
         Instance instance = new DenseInstance(header.numAttributes());
         instance.setDataset(header);
 
-        // --- MAPEO DE ATRIBUTOS CLAVE DEL ÁRBOL J48 --- 
+        // --- MAPEO DE ATRIBUTOS CLAVE --- 
         assignValue(instance, "¿Cómo percibe su calidad de sueño?", caso.getPercepcion());
         assignValue(instance, "Frecuencia de consumo de medicamentos para dormir", caso.getFrecuenciaMedicacion());
         assignValue(instance, "Duración total de sueño", caso.getDuracionSueno());
@@ -65,7 +65,7 @@ public class WekaModeloCalidadSueno {
 
         try {
             double prediction = classifier.classifyInstance(instance);
-            return header.classAttribute().value((int) prediction); // Retorna "Buena" o "Mala" [cite: 39]
+            return header.classAttribute().value((int) prediction); // Retorna "Buena" o "Mala" 
         } catch (Exception e) {
             throw new RuntimeException("Error en la clasificación del modelo J48", e);
         }
