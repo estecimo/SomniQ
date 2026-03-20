@@ -1,38 +1,41 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Evaluación de Calidad de Sueño</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="card">
-      <div style="text-align: center; margin-bottom: 1rem;">
-        <img src="images/uady.svg" alt="Logo UADY" style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
-      </div>
-      <h2 style="text-align: center">Campus de Ciencias de la Salud</h2>
-      <h3 style="text-align: center">Calidad de Sueño</h3>
 
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
-          Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos y percepciones recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para brindarte un diagnóstico preliminar y una explicación personalizada.
-        </p>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluación de Calidad de Sueño</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="card">
+    <div style="text-align: center; margin-bottom: 1rem;">
+      <img src="images/uady.svg" alt="Logo UADY"
+        style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
+    </div>
+    <h2 style="text-align: center">Campus de Ciencias de la Salud</h2>
+    <h3 style="text-align: center">Calidad de Sueño</h3>
+
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
+        Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos y percepciones
+        recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para
+        brindarte un diagnóstico preliminar y una explicación personalizada.
+      </p>
+    </div>
+
+    <form id="evaluation-form" onsubmit="enviar(event)">
 
       <div class="label-container">
-        <label for="percepcion" style="margin: 0"
-          >¿Cómo percibe su calidad de sueño?</label
-        >
+        <label for="percepcion" style="margin: 0">¿Cómo percibe su calidad de sueño?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext"
-            >Es tu opinión personal sobre qué tan bien sientes que descansas al
-            dormir.</span
-          >
+          <span class="tooltiptext">Es tu opinión personal sobre qué tan bien sientes que descansas al
+            dormir.</span>
         </div>
       </div>
-      <select id="percepcion">
+      <select id="percepcion" required>
         <option value="" disabled selected hidden></option>
         <option value="Buena">Buena</option>
         <option value="Mala">Mala</option>
@@ -42,13 +45,11 @@
         <label for="duracion" style="margin: 0">¿Cuál es su duración total de sueño?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext"
-            >La cantidad total de horas que duermes habitualmente cada
-            noche.</span
-          >
+          <span class="tooltiptext">La cantidad total de horas que duermes habitualmente cada
+            noche.</span>
         </div>
       </div>
-      <select id="duracion">
+      <select id="duracion" required>
         <option value="" disabled selected hidden></option>
         <option value="Normal">Entre 6 y 9 horas</option>
         <option value="Corta">Menos de 6 horas</option>
@@ -56,18 +57,14 @@
       </select>
 
       <div class="label-container">
-        <label for="latencia" style="margin: 0"
-          >¿Cuál es su clasificación de latencia?</label
-        >
+        <label for="latencia" style="margin: 0">¿Cuál es su clasificación de latencia?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext"
-            >El tiempo que tardas en quedarte dormido desde que te acuestas en
-            la cama.</span
-          >
+          <span class="tooltiptext">El tiempo que tardas en quedarte dormido desde que te acuestas en
+            la cama.</span>
         </div>
       </div>
-      <select id="latencia">
+      <select id="latencia" required>
         <option value="" disabled selected hidden></option>
         <option value="Normal">Entre 5 y 15 minutos</option>
         <option value="Prolongada">Más de 15 minutos</option>
@@ -75,79 +72,69 @@
       </select>
 
       <div class="label-container">
-        <label for="covid" style="margin: 0"
-          >¿Tuvo COVID-19 en los últimos 6 meses?</label
-        >
+        <label for="covid" style="margin: 0">¿Tuvo COVID-19 en los últimos 6 meses?</label>
         <div class="tooltip">
           <span class="info-icon">ℹ️</span>
-          <span class="tooltiptext"
-            >Si has sido diagnosticado con COVID-19 recientemente, ya que puede
-            afectar tus patrones de sueño.</span
-          >
+          <span class="tooltiptext">Si has sido diagnosticado con COVID-19 recientemente, ya que puede
+            afectar tus patrones de sueño.</span>
         </div>
       </div>
-      <select id="covid">
+      <select id="covid" required>
         <option value="" disabled selected hidden></option>
         <option value="No">No</option>
         <option value="Si">Sí</option>
       </select>
 
-      <p id="error-message" class="error-message" style="display: none;"></p>
+      <button id="btn-evaluar" type="submit">Evaluar Calidad</button>
+    </form>
 
-      <button id="btn-evaluar" onclick="enviar()">Evaluar Calidad</button>
+    <div id="loading-evaluacion" style="display: none; margin-top: 1rem; text-align: center;">
+      <div class="spinner"></div>
+      <p style="color: #666; margin-top: 5px">Evaluando calidad de sueño...</p>
+    </div>
 
-      <div id="loading-evaluacion" style="display: none; margin-top: 1rem; text-align: center;">
+    <p id="resultado"></p>
+
+    <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
+      <img id="resultado-imagen" src="" alt="Resultado"
+        style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
+    </div>
+
+    <div id="explicacion-container" style="display: none; text-align: center">
+      <button id="btn-explicar" onclick="pedirExplicacion()" style="background-color: #28a745; margin-top: 1rem">
+        ¿Qué significa este resultado?
+      </button>
+
+      <div id="loading-explicacion" style="display: none; margin-top: 1rem">
         <div class="spinner"></div>
-        <p style="color: #666; margin-top: 5px">Evaluando calidad de sueño...</p>
+        <p style="color: #666; margin-top: 5px">Generando explicación...</p>
       </div>
-
-      <p id="resultado"></p>
-
-      <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
-        <img id="resultado-imagen" src="" alt="Resultado" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
-      </div>
-
-      <div id="explicacion-container" style="display: none; text-align: center">
-        <button
-          id="btn-explicar"
-          onclick="pedirExplicacion()"
-          style="background-color: #28a745; margin-top: 1rem"
-        >
-          ¿Qué significa este resultado?
-        </button>
-
-        <div id="loading-explicacion" style="display: none; margin-top: 1rem">
-          <div class="spinner"></div>
-          <p style="color: #666; margin-top: 5px">Generando explicación...</p>
-        </div>
-        <p
-          id="texto-explicacion"
-          style="
+      <p id="texto-explicacion" style="
             margin-top: 1rem;
             text-align: justify;
             border-top: 1px dashed #ccc;
             padding-top: 1rem;
             display: none;
-          "
-        ></p>
-      </div>
-
-      <div class="disclaimer">
-        <p>
-          La clasificación fue obtenida mediante un modelo de Inteligencia
-          Artificial probado con más de 800 registros de alumnos del Campus de
-          Ciencias de la Salud de la UADY, alcanzando una precisión cercana al
-          85 % para identificar buena y mala calidad de sueño.
-        </p>
-        <p>
-          Este resultado puede utilizarse como un apoyo confiable, aunque no
-          reemplaza la opinión de un profesional de la salud.
-        </p>
-      </div>
+          "></p>
     </div>
 
-    <script src="app.js?v=6"></script>
-    <link rel="preload" as="image" href="images/geminibadsleep.webp" />
-    <link rel="preload" as="image" href="images/geminigoodspleep.webp" />
-  </body>
+    <div class="disclaimer">
+      <p>
+        La clasificación fue obtenida mediante un modelo de Inteligencia
+        Artificial probado con más de 800 registros de alumnos del Campus de
+        Ciencias de la Salud de la UADY, alcanzando una precisión cercana al
+        85 % para identificar buena y mala calidad de sueño.
+      </p>
+      <p>
+        Este resultado puede utilizarse como un apoyo confiable, aunque no
+        reemplaza la opinión de un profesional de la salud.
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js?v=6"></script>
+  <link rel="preload" as="image" href="images/geminibadsleep.webp" />
+  <link rel="preload" as="image" href="images/geminigoodspleep.webp" />
+</body>
+
 </html>

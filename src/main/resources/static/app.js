@@ -1,22 +1,12 @@
-async function enviar() {
+async function enviar(event) {
+  event.preventDefault(); // Prevent default form submission
+
   const data = {
     percepcionCalidad: document.getElementById("percepcion").value,
     duracionSueno: document.getElementById("duracion").value,
     latencia: document.getElementById("latencia").value,
     covid: document.getElementById("covid").value
   };
-
-  const errorMessage = document.getElementById("error-message");
-
-  // Validation
-  if (!data.percepcionCalidad || !data.duracionSueno || !data.latencia || !data.covid) {
-    errorMessage.innerText = "Por favor, responde todas las preguntas antes de evaluar.";
-    errorMessage.style.display = "block";
-    return;
-  }
-
-  // Clear previous error message if validation passes
-  errorMessage.style.display = "none";
 
   // Reset UI elements
   document.getElementById("resultado").innerText = "";
