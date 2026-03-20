@@ -19,6 +19,7 @@ async function enviar() {
   errorMessage.style.display = "none";
 
   // Reset UI elements
+  document.getElementById("resultado").innerText = "";
   document.getElementById("explicacion-container").style.display = "none";
   document.getElementById("texto-explicacion").innerText = "";
   document.getElementById("texto-explicacion").style.display = "none";
@@ -28,6 +29,17 @@ async function enviar() {
   const imgContainer = document.getElementById("resultado-imagen-container");
   if (imgContainer) {
     imgContainer.style.display = "none";
+  }
+
+  const btnEvaluar = document.getElementById("btn-evaluar");
+  const loadingEvaluacion = document.getElementById("loading-evaluacion");
+  
+  if (btnEvaluar) {
+    btnEvaluar.disabled = true;
+    btnEvaluar.style.display = "none";
+  }
+  if (loadingEvaluacion) {
+    loadingEvaluacion.style.display = "block";
   }
 
   try {
@@ -68,6 +80,14 @@ async function enviar() {
   } catch (err) {
     console.error(err);
     document.getElementById("resultado").innerText = "Error al evaluar";
+  } finally {
+    if (loadingEvaluacion) {
+      loadingEvaluacion.style.display = "none";
+    }
+    if (btnEvaluar) {
+      btnEvaluar.style.display = "inline-block";
+      btnEvaluar.disabled = false;
+    }
   }
 }
 

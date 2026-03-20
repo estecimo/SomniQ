@@ -94,7 +94,12 @@
 
       <p id="error-message" class="error-message" style="display: none;"></p>
 
-      <button onclick="enviar()">Evaluar Calidad</button>
+      <button id="btn-evaluar" onclick="enviar()">Evaluar Calidad</button>
+
+      <div id="loading-evaluacion" style="display: none; margin-top: 1rem; text-align: center;">
+        <div class="spinner"></div>
+        <p style="color: #666; margin-top: 5px">Evaluando calidad de sueño...</p>
+      </div>
 
       <p id="resultado"></p>
 
