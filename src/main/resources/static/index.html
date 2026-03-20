@@ -6,23 +6,25 @@
     <title>Evaluación Calidad de Sueño - UADY</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
+<body>
     <div class="card">
-        <div style="text-align: center; margin-bottom: 1rem;">
-        <img src="images/uady.png" alt="Logo UADY" style="max-width: 100px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
+        <div class="logo-container">
+        <img src="images/uady.svg" alt="Logo UADY" class="logo-img"/>
         </div>
 
         <h1>Campus de Ciencias Exactas e Ingenierías</h1>
         <h2>Calidad de Sueño</h2>
 
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-        <p style="text-align: justify; color: #555; font-size: 0.95rem; line-height: 1.5;">
-          Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos y percepciones recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial analizará tus respuestas para brindarte un diagnóstico preliminar y una explicación personalizada.
+        <div class="description-container">
+        <p class="description-text">
+          Este formulario tiene como objetivo clasificar tu calidad de sueño basándose en tus hábitos 
+          y percepciones recientes. Al responder estas preguntas, nuestro modelo de Inteligencia Artificial 
+          analizará tus respuestas para brindarte un diagnóstico preliminar y una explicación personalizada.
         </p>
         </div>
 
-        <div id="mensaje-error" class="alerta-error" style="display: none;">
+        <div id="mensaje-error" class="alerta-error">
             Por favor, selecciona una opción en todos los campos.
         </div>
 
@@ -164,23 +166,29 @@
                 <option value="Sí">Sí</option>
             </select>
 
-            <button type="button" onclick="enviar()">ANALIZAR SUEÑO</button>
+            <button type="button" onclick="enviar()">Evaluar Calidad</button>
         </form>
 
-        <p id="resultado"></p>
-        <div id="resultado-imagen-container" style="display: none; text-align: center; margin-top: 1rem;">
-        <img id="resultado-imagen" src="" alt="Resultado" style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px;" />
+        <div id="loading-evaluacion" class="loading-container">
+            <div class="spinner"></div>
+            <p class="loading-text">Evaluando calidad de sueño...</p>
         </div>
 
-        <div id="explicacion-container" style="display: none; text-align: center">
+        <p id="resultado"></p>
+
+        <div id="resultado-imagen-container" class="resultado-imagen-container">
+            <img id="resultado-imagen" src="" alt="Resultado" class="resultado-imagen" />
+        </div>
+
+        <div id="explicacion-container" class="explicacion-container">
             <button id="btn-explicar" onclick="pedirExplicacion()" class="btn-secundario">
                 ¿Qué significa este resultado?
             </button>
-            <div id="loading-explicacion" style="display: none; margin-top: 1rem">
+            <div id="loading-explicacion" class="loading-container">
                 <div class="spinner"></div>
-                <p>Generando explicación...</p>
+                <p class="loading-text">Generando explicación...</p>
             </div>
-            <p id="texto-explicacion"></p>
+            <p id="texto-explicacion" class="texto-explicacion"></p>
         </div>
 
         <div class="disclaimer">
@@ -198,5 +206,7 @@
     </div>
 
     <script src="app.js"></script>
+    <link rel="preload" as="image" href="images/geminibadsleep.webp"/>
+    <link rel="preload" as="image" href="images/geminigoodspleep.webp"/>
 </body>
 </html>
