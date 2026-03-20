@@ -1,8 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   font-family: sans-serif;
   display: flex;
   justify-content: center;
+  align-items: flex-start; /* Aligns to top, breathing room provided by padding */
+  min-height: 100vh;
+  padding: 20px;
   /* background-color: #f0f2f5;  Removed in favor of gradient */
 }
 
@@ -13,7 +27,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  margin: 50px auto; /* Added margin for centering */
+  margin-top: 50px; /* Instead of auto margin, just push it down slightly */
 }
 
 h2 {
@@ -155,7 +169,31 @@ p#resultado {
 
 /* Additional specific styles from original styles.css if any were unique */
 input {
-  width: 98%;
+  width: 100%;
   margin: 8px 0;
   padding: 10px;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 480px) {
+  .card {
+    margin-top: 20px;
+    padding: 1.5rem;
+  }
+
+  /* Make sure tooltip doesn't bleed off screen and cause horizontal scroll */
+  .tooltip .tooltiptext {
+    width: 220px;
+    left: auto;
+    right: -20px; /* Align to the right side so it expands inward */
+    margin-left: 0;
+    font-size: 0.85rem;
+  }
+
+  /* Adjust the little arrow to point back at the icon */
+  .tooltip .tooltiptext::after {
+    left: auto;
+    right: 30px;
+    margin-left: 0;
+  }
 }
