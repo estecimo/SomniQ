@@ -6,7 +6,7 @@ Además, integra la **API de Gemini** para proporcionar explicaciones detalladas
 
 ---
 
-## 🎯 Descripción del Proyecto
+## Descripción del Proyecto
 
 Este proyecto es una API REST que permite clasificar la calidad de sueño como **Buena** o **Mala** basándose en el modelo entrenado con datos reales de estudiantes de Ciencias de la Salud o de el Campus de Ciencias Exactas e Ingenierías.
 
@@ -20,7 +20,7 @@ Este proyecto es una API REST que permite clasificar la calidad de sueño como *
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Instalación y Ejecución
 
 ### Prerrequisitos
 
@@ -28,13 +28,13 @@ Este proyecto es una API REST que permite clasificar la calidad de sueño como *
 - **Maven 3.6** o superior
 - **API Key de Google Gemini** (para la función de explicación)
 
-### 1️⃣ Compilar
+### Compilar
 
 ```bash
 mvn clean install
 ```
 
-### 2️⃣ Configurar API Key
+### Configurar API Key
 
 Tienes dos opciones para configurar tu llave de Gemini:
 
@@ -52,7 +52,7 @@ Edita `src/main/resources/application.properties`:
 gemini.api.key=tu_api_key_aqui
 ```
 
-### 3️⃣ Ejecutar
+### Ejecutar
 
 ```bash
 mvn spring-boot:run
@@ -62,7 +62,7 @@ Accede a la aplicación en: **http://localhost:8080**
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **Java 17**
 - **Spring Boot 3.2**
