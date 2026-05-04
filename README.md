@@ -22,7 +22,7 @@ El modelo fue entrenado con más de 800 registros reales de estudiantes de Cienc
 ## Estructura del Proyecto
 
 ```
-WekaNode48/
+SomniQ/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/example/calidadsueno/
