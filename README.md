@@ -15,8 +15,8 @@ Este proyecto es una API REST que permite clasificar la calidad de sueño como *
 ## Branches
 
 - **master**: rama principal
-- **release/11feb26-cs-salud**: rama usando el modelo para el campus de ciencias de la salud
-- **release/11feb26-ing-cs-exactas**: rama usando el modelo para el campus de ciencias exactas e ingenierías
+- **release/11feb26-cs-salud**: SomniQ-HS rama usando el modelo para el campus de ciencias de la salud
+- **release/11feb26-ing-cs-exactas**: SomniQ-EES rama usando el modelo para el campus de ciencias exactas e ingenierías
 
 ---
 
