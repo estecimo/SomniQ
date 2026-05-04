@@ -25,7 +25,7 @@ API REST que permite:
 ## Estructura del Proyecto
 
 ```
-WekaNode48/
+SomniQ/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/example/calidadsueno/
